@@ -1,0 +1,24 @@
+/* frontend/src/components/Layout.css */
+.drawer-header {
+  padding: 20px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.drawer-title {
+  font-weight: 700;
+  color: #6366f1;
+}
+
+.drawer-item {
+  border-radius: 8px;
+  margin: 4px 8px;
+}
+
+.drawer-item:hover {
+  background-color: #f1f5f9;
+}
+
+.drawer-icon {
+  min-width: 40px;
+  color: #64748b;
+}
