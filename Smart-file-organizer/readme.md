@@ -59,7 +59,28 @@ A modern, professional desktop application for analyzing, organizing, and managi
 - pip (Python package installer)
 - Windows, macOS, or Linux
 
-### Step 1: Clone the Repository
+### Step 1: Create Project Files
+
+Create the following files in your project directory:
+
+1. **main.py** - Main application entry point
+2. **file_analyzer.py** - File analysis and categorization logic
+3. **file_organizer.py** - File organization operations
+4. **ui_components.py** - User interface components
+5. **requirements.txt** - Required Python packages
+
+### Step 2: Install Required Packages
+
+Open your terminal/command prompt and run:
+
 ```bash
-git clone https://github.com/yourusername/smart-file-organizer-pro.git
+# Navigate to your project directory
 cd smart-file-organizer-pro
+
+# Install required packages
+pip install -r requirements.txt
+
+### Step 3: Run the application
+
+# Run the application
+python main.py
