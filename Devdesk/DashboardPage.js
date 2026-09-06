@@ -103,4 +103,99 @@ function DashboardPage() {
             title="Open Issues"
             value={data.openIssues}
             icon={<BugReportIcon sx={{ color: '#ef4444' }} />}
-           
+            color="#ef4444"
+          />
+        </Grid>
+        <Grid item xs={12} sm={6} md={3}>
+          <StatCard
+            title="Completed Issues"
+            value={data.closedIssues + data.resolvedIssues}
+            icon={<ScheduleIcon sx={{ color: '#3b82f6' }} />}
+            color="#3b82f6"
+          />
+        </Grid>
+
+        <Grid item xs={12} md={8}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>
+                Issue Overview
+              </Typography>
+              <Box sx={{ mb: 2 }}>
+                <Typography variant="body2" color="text.secondary">
+                  Open Issues
+                </Typography>
+                <LinearProgress
+                  variant="determinate"
+                  value={data.totalIssues > 0 ? (data.openIssues / data.totalIssues) * 100 : 0}
+                  sx={{ height: 8, borderRadius: 4 }}
+                />
+              </Box>
+              <Box sx={{ mb: 2 }}>
+                <Typography variant="body2" color="text.secondary">
+                  In Progress
+                </Typography>
+                <LinearProgress
+                  variant="determinate"
+                  value={data.totalIssues > 0 ? (data.inProgressIssues / data.totalIssues) * 100 : 0}
+                  sx={{ height: 8, borderRadius: 4 }}
+                  color="warning"
+                />
+              </Box>
+              <Box>
+                <Typography variant="body2" color="text.secondary">
+                  Completed
+                </Typography>
+                <LinearProgress
+                  variant="determinate"
+                  value={data.totalIssues > 0 ? ((data.closedIssues + data.resolvedIssues) / data.totalIssues) * 100 : 0}
+                  sx={{ height: 8, borderRadius: 4 }}
+                  color="success"
+                />
+              </Box>
+            </CardContent>
+          </Card>
+        </Grid>
+
+        <Grid item xs={12} md={4}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>
+                Upcoming Deadlines
+              </Typography>
+              {data.upcomingDeadlines && data.upcomingDeadlines.length > 0 ? (
+                data.upcomingDeadlines.map((deadline, index) => (
+                  <Box key={index} sx={{ mb: 2 }}>
+                    <Typography variant="body2">
+                      {deadline.name}
+                    </Typography>
+                    <Typography variant="caption" color="text.secondary">
+                      Due: {new Date(deadline.deadline).toLocaleDateString()}
+                    </Typography>
+                  </Box>
+                ))
+              ) : (
+                <Typography variant="body2" color="text.secondary">
+                  No upcoming deadlines
+                </Typography>
+              )}
+            </CardContent>
+          </Card>
+        </Grid>
+
+        <Grid item xs={12}>
+          <Card>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>
+                Recent Activity
+              </Typography>
+              <ActivityFeed activities={data.recentActivities} />
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
+    </Box>
+  );
+}
+
+export default DashboardPage;
