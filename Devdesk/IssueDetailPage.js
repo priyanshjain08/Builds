@@ -108,4 +108,176 @@ function IssueDetailPage() {
                 </Typography>
                 <StatusBadge status={issue.status} />
               </Box>
-              <Typography variant="body2" color
+              <Typography variant="body2" color="text.secondary">
+                {issue.projectName} • Reported by {issue.reporter?.firstName} {issue.reporter?.lastName}
+              </Typography>
+            </Box>
+            <Box>
+              <IconButton onClick={() => {
+                setEditedIssue(issue);
+                setEditModal(true);
+              }}>
+                <EditIcon />
+              </IconButton>
+              <IconButton onClick={handleDeleteIssue}>
+                <DeleteIcon />
+              </IconButton>
+            </Box>
+          </Box>
+
+          {issue.description && (
+            <Typography variant="body1" sx={{ mb: 2 }}>
+              {issue.description}
+            </Typography>
+          )}
+
+          <Divider sx={{ my: 2 }} />
+
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={3}>
+              <Typography variant="caption" color="text.secondary">
+                Type
+              </Typography>
+              <Box sx={{ mt: 0.5 }}>
+                <TypeBadge type={issue.type} />
+              </Box>
+            </Grid>
+            <Grid item xs={12} sm={3}>
+              <Typography variant="caption" color="text.secondary">
+                Priority
+              </Typography>
+              <Box sx={{ mt: 0.5 }}>
+                <PriorityBadge priority={issue.priority} />
+              </Box>
+            </Grid>
+            <Grid item xs={12} sm={3}>
+              <Typography variant="caption" color="text.secondary">
+                Assignee
+              </Typography>
+              <Typography variant="body2">
+                {issue.assignee ? `${issue.assignee.firstName} ${issue.assignee.lastName}` : 'Unassigned'}
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={3}>
+              <Typography variant="caption" color="text.secondary">
+                Deadline
+              </Typography>
+              <Typography variant="body2">
+                {issue.deadline ? new Date(issue.deadline).toLocaleDateString() : 'No deadline'}
+              </Typography>
+            </Grid>
+          </Grid>
+        </CardContent>
+      </Card>
+
+      <CommentSection issueId={id} />
+
+      <Dialog open={editModal} onClose={() => setEditModal(false)} maxWidth="sm" fullWidth>
+        <DialogTitle>Edit Issue</DialogTitle>
+        <DialogContent>
+          <TextField
+            fullWidth
+            label="Issue Title"
+            value={editedIssue.title || ''}
+            onChange={(e) => setEditedIssue({ ...editedIssue, title: e.target.value })}
+            sx={{ mb: 2, mt: 1 }}
+          />
+          <TextField
+            fullWidth
+            label="Description"
+            multiline
+            rows={3}
+            value={editedIssue.description || ''}
+            onChange={(e) => setEditedIssue({ ...editedIssue, description: e.target.value })}
+            sx={{ mb: 2 }}
+          />
+          <TextField
+            fullWidth
+            select
+            label="Project"
+            value={editedIssue.projectId || ''}
+            onChange={(e) => setEditedIssue({ ...editedIssue, projectId: e.target.value })}
+            sx={{ mb: 2 }}
+          >
+            {projects.map((project) => (
+              <MenuItem key={project.id} value={project.id}>
+                {project.name}
+              </MenuItem>
+            ))}
+          </TextField>
+          <TextField
+            fullWidth
+            select
+            label="Type"
+            value={editedIssue.type || 'TASK'}
+            onChange={(e) => setEditedIssue({ ...editedIssue, type: e.target.value })}
+            sx={{ mb: 2 }}
+          >
+            <MenuItem value="BUG">Bug</MenuItem>
+            <MenuItem value="FEATURE">Feature</MenuItem>
+            <MenuItem value="TASK">Task</MenuItem>
+            <MenuItem value="IMPROVEMENT">Improvement</MenuItem>
+          </TextField>
+          <TextField
+            fullWidth
+            select
+            label="Priority"
+            value={editedIssue.priority || 'MEDIUM'}
+            onChange={(e) => setEditedIssue({ ...editedIssue, priority: e.target.value })}
+            sx={{ mb: 2 }}
+          >
+            <MenuItem value="LOW">Low</MenuItem>
+            <MenuItem value="MEDIUM">Medium</MenuItem>
+            <MenuItem value="HIGH">High</MenuItem>
+            <MenuItem value="CRITICAL">Critical</MenuItem>
+          </TextField>
+          <TextField
+            fullWidth
+            select
+            label="Status"
+            value={editedIssue.status || 'OPEN'}
+            onChange={(e) => setEditedIssue({ ...editedIssue, status: e.target.value })}
+            sx={{ mb: 2 }}
+          >
+            <MenuItem value="OPEN">Open</MenuItem>
+            <MenuItem value="IN_PROGRESS">In Progress</MenuItem>
+            <MenuItem value="IN_REVIEW">In Review</MenuItem>
+            <MenuItem value="RESOLVED">Resolved</MenuItem>
+            <MenuItem value="CLOSED">Closed</MenuItem>
+          </TextField>
+          <TextField
+            fullWidth
+            select
+            label="Assignee"
+            value={editedIssue.assignee?.id || ''}
+            onChange={(e) => setEditedIssue({ ...editedIssue, assigneeId: e.target.value })}
+            sx={{ mb: 2 }}
+          >
+            <MenuItem value="">Unassigned</MenuItem>
+            {teamMembers.map((member) => (
+              <MenuItem key={member.id} value={member.id}>
+                {member.firstName} {member.lastName}
+              </MenuItem>
+            ))}
+          </TextField>
+          <TextField
+            fullWidth
+            type="date"
+            label="Deadline"
+            value={editedIssue.deadline || ''}
+            onChange={(e) => setEditedIssue({ ...editedIssue, deadline: e.target.value })}
+            InputLabelProps={{ shrink: true }}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setEditModal(false)}>Cancel</Button>
+          <Button onClick={handleUpdateIssue} variant="contained">
+            Save Changes
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Box>
+  );
+}
+
+export default IssueDetailPage;
