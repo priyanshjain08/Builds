@@ -73,12 +73,13 @@ Create the following files in your project directory:
 
 Open your terminal/command prompt and run:
 
-```bash
+
 # Navigate to your project directory
 cd smart-file-organizer-pro
 
 # Install required packages
 pip install -r requirements.txt
+
 
 ### Step 3: Run the application
 
