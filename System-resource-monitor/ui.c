@@ -206,4 +206,69 @@ void draw_disk(DiskStats *disk) {
         int bar_width = 30;
         int filled = (int)(disk->disks[i].usage_percent / 100.0 * bar_width);
         printf("[");
-        for (int j = 0;
+        for (int j = 0; j < bar_width; j++) {
+            if (j < filled) {
+                printf("#");
+            } else {
+                printf("-");
+            }
+        }
+        printf("]\n");
+    }
+    
+    draw_menu(NULL);
+}
+
+void draw_network(NetworkStats *net) {
+    draw_header("NETWORK INFORMATION");
+    
+    printf(COLOR_BOLD);
+    printf("%-15s %-8s %-15s %-15s %-12s %-12s\n",
+           "INTERFACE", "STATUS", "RX BYTES", "TX BYTES", "RX PACKETS", "TX PACKETS");
+    printf(COLOR_RESET);
+    printf("%-15s %-8s %-15s %-15s %-12s %-12s\n",
+           "---------------", "--------", "---------------", "---------------",
+           "------------", "------------");
+    
+    for (int i = 0; i < net->interface_count; i++) {
+        NetworkInterface *ni = &net->interfaces[i];
+        
+        // Color code based on status
+        if (ni->is_up) {
+            printf(COLOR_GREEN);
+            printf("%-15s %-8s ", ni->interface_name, "UP");
+        } else {
+            printf(COLOR_RED);
+            printf("%-15s %-8s ", ni->interface_name, "DOWN");
+        }
+        printf(COLOR_RESET);
+        
+        char rx[32], tx[32];
+        format_bytes(ni->rx_bytes, rx, sizeof(rx));
+        format_bytes(ni->tx_bytes, tx, sizeof(tx));
+        
+        printf("%-15s %-15s %-12llu %-12llu\n",
+               rx, tx, ni->rx_packets, ni->tx_packets);
+    }
+    
+    draw_menu(NULL);
+}
+
+void draw_settings(AppState *state) {
+    draw_header("SETTINGS");
+    
+    printf("Current Settings:\n\n");
+    printf("Auto-refresh: %s\n", state->auto_refresh ? "Enabled" : "Disabled");
+    printf("Refresh interval: %d seconds\n", state->refresh_interval);
+    printf("Process sort mode: %s\n", 
+           state->process_sort_mode == 0 ? "CPU usage" : "Memory usage");
+    printf("Process list limit: %d\n", state->process_limit);
+    
+    printf("\nCommands:\n");
+    printf("[P] Toggle auto-refresh\n");
+    printf("[+] Increase refresh interval\n");
+    printf("[-] Decrease refresh interval\n");
+    printf("[S] Toggle process sort mode\n");
+    printf("[L] Change process limit\n");
+    printf("[Q] Return to dashboard\n");
+}
