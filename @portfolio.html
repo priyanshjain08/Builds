@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Priyansh Jain · Web Developer</title>
+  <meta name="description" content="Priyansh Jain is a web developer building fast, responsive websites and full-stack web applications.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ----- reset & base (full original) ----- */
+    :root{
+      --forest:#1f3d2b; --forest-dark:#152a1c; --emerald:#2f6b45; --emerald-light:#3f8a5c;
+      --mint:#e4efe1; --mint-line:#cfe0ca; --cream:#faf8f2; --white:#ffffff;
+      --ink:#1b1f19; --muted:#5d6459; --line:#e3ded0; --gold:#c79a4d;
+      --radius-lg:26px; --radius-md:16px; --radius-sm:8px; --maxw:1180px;
+    }
+    *{box-sizing:border-box;} html{scroll-behavior:smooth;} body{margin:0;font-family:'Inter',sans-serif;color:var(--ink);background:var(--cream);line-height:1.6;-webkit-font-smoothing:antialiased;}
+    h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif;font-weight:600;line-height:1.15;margin:0;letter-spacing:-0.01em;}
+    p{margin:0;} a{color:inherit;text-decoration:none;} ul{margin:0;padding:0;list-style:none;} img{max-width:100%;display:block;}
+    .wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px;}
+    .section{padding:96px 0;} .section--tight{padding:72px 0;} .section--alt{background:var(--mint);} .section--forest{background:var(--forest);color:#eef3ec;}
+    .tag{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:500;color:var(--emerald);background:var(--mint);border:1px solid var(--mint-line);padding:6px 14px;border-radius:100px;margin-bottom:18px;}
+    .section--forest .tag{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.16);color:#bfe0cc;}
+    .tag::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--emerald);display:block;}
+    .section--forest .tag::before{background:#7fcb9c;}
+    h2.h-title{font-size:clamp(28px,3.4vw,42px);max-width:640px;}
+    .lede{font-size:17px;color:var(--muted);max-width:520px;margin-top:14px;}
+    .section--forest .lede{color:#c7d6c9;}
+    .head-row{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:52px;}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:14px 24px;border-radius:100px;font-weight:600;font-size:15px;border:1px solid transparent;transition:transform .18s ease, background .18s ease, border-color .18s ease;}
+    .btn:hover{transform:translateY(-2px);} .btn-primary{background:var(--forest);color:#fff;} .btn-primary:hover{background:var(--emerald);}
+    .btn-ghost{border-color:var(--ink);color:var(--ink);} .btn-ghost:hover{border-color:var(--emerald);color:var(--emerald);}
+    .btn-light{background:#fff;color:var(--forest);} .btn-light:hover{background:var(--mint);}
+    .btn-outline-light{border-color:rgba(255,255,255,0.4);color:#fff;} .btn-outline-light:hover{border-color:#fff;}
+
+    /* header */
+    header{position:sticky;top:0;z-index:50;background:rgba(250,248,242,0.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+    nav.wrap{display:flex;align-items:center;justify-content:space-between;padding-top:18px;padding-bottom:18px;}
+    .logo{display:flex;align-items:center;gap:10px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:18px;}
+    .logo-mark{width:34px;height:34px;border-radius:10px;background:var(--forest);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:500;}
+    .nav-links{display:flex;align-items:center;gap:32px;} .nav-links a{font-size:15px;font-weight:500;color:var(--ink);} .nav-links a:hover{color:var(--emerald);}
+    .nav-cta{display:flex;align-items:center;gap:18px;} .burger{display:none;flex-direction:column;gap:5px;background:none;border:none;padding:6px;}
+    .burger span{width:22px;height:2px;background:var(--ink);display:block;} .mobile-menu{display:none;flex-direction:column;gap:4px;padding:8px 32px 22px;border-top:1px solid var(--line);}
+    .mobile-menu.open{display:flex;} .mobile-menu a{padding:10px 0;font-weight:500;border-bottom:1px solid var(--line);}
+
+    /* project grid */
+    .proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+    .proj-card{border-radius:var(--radius-md);overflow:hidden;border:1px solid var(--line);background:var(--white);transition:transform .2s ease, box-shadow .2s ease;cursor:pointer;}
+    .proj-card:hover{transform:translateY(-6px);box-shadow:0 24px 48px -24px rgba(31,61,43,0.35);}
+    .proj-thumb{height:160px;position:relative;display:flex;align-items:flex-end;padding:16px;}
+    .proj-thumb span.mark{font-family:'Space Grotesk',sans-serif;font-size:34px;font-weight:600;color:rgba(255,255,255,0.9);}
+    .proj-body{padding:22px 22px 26px;} .proj-tag{font-size:12px;font-weight:600;color:var(--emerald);text-transform:none;}
+    .proj-body h3{font-size:18px;margin-top:8px;} .proj-body p{color:var(--muted);font-size:14px;margin-top:8px;}
+
+    /* project detail page */
+    .project-detail-page{display:none;background:var(--cream);padding:60px 0 80px;}
+    .project-detail-page.active{display:block;}
+    .detail-back{display:inline-flex;align-items:center;gap:10px;font-weight:500;margin-bottom:32px;color:var(--emerald);cursor:pointer;}
+    .detail-back:hover{color:var(--forest);}
+    .detail-hero{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;}
+    .detail-hero .proj-thumb{height:280px;border-radius:var(--radius-md);}
+    .detail-meta{display:flex;gap:24px;flex-wrap:wrap;margin:20px 0 16px;}
+    .detail-meta span{background:var(--mint);padding:4px 14px;border-radius:100px;font-size:13px;font-weight:500;color:var(--emerald);}
+    .detail-desc{font-size:16px;color:var(--muted);max-width:520px;line-height:1.7;}
+    .detail-actions{margin-top:32px;display:flex;gap:16px;flex-wrap:wrap;}
+
+    /* blog detail page */
+    .blog-detail-page{display:none;background:var(--cream);padding:60px 0 80px;}
+    .blog-detail-page.active{display:block;}
+    .blog-detail-content{max-width:780px;margin:0 auto;}
+    .blog-detail-content .blog-thumb{height:220px;border-radius:var(--radius-md);margin-bottom:28px;}
+    .blog-detail-content h2{font-size:34px;margin:16px 0 12px;}
+    .blog-detail-content .blog-meta{display:flex;gap:20px;color:var(--muted);font-size:14px;margin-bottom:24px;}
+    .blog-detail-content .blog-body-text{font-size:16.5px;line-height:1.8;color:var(--ink);}
+    .blog-detail-content .blog-body-text p{margin-bottom:20px;}
+
+    /* blog grid */
+    .blog-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;}
+    .blog-card{border:1px solid var(--line);border-radius:var(--radius-md);background:var(--white);overflow:hidden;transition:transform .2s ease;cursor:pointer;}
+    .blog-card:hover{transform:translateY(-4px);} .blog-thumb{height:110px;} .blog-body{padding:20px;}
+    .blog-cat{font-size:12px;font-weight:600;color:var(--emerald);} .blog-body h4{font-size:15.5px;margin-top:8px;line-height:1.4;}
+
+    /* other sections */
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+    .card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius-md);padding:30px;transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;}
+    .card:hover{transform:translateY(-4px);box-shadow:0 20px 40px -24px rgba(31,61,43,0.25);border-color:var(--mint-line);}
+    .icon-badge{width:46px;height:46px;border-radius:12px;background:var(--mint);color:var(--emerald);display:flex;align-items:center;justify-content:center;margin-bottom:20px;}
+    .card h3{font-size:18px;margin-bottom:10px;} .card p{color:var(--muted);font-size:14.5px;}
+    .about-grid{display:grid;grid-template-columns:0.85fr 1.15fr;gap:64px;align-items:center;}
+    .avatar-block{background:var(--forest);border-radius:var(--radius-lg);padding:44px;color:#fff;position:relative;overflow:hidden;}
+    .avatar-block::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 85% 15%, rgba(127,203,156,0.25), transparent 55%);}
+    .avatar-circle{width:104px;height:104px;border-radius:50%;background:var(--mint);color:var(--forest);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-size:34px;font-weight:600;position:relative;z-index:1;margin-bottom:24px;}
+    .avatar-block h4{font-size:21px;position:relative;z-index:1;} .avatar-block .role{color:#a9cbb3;font-size:14px;margin-top:6px;position:relative;z-index:1;}
+    .avatar-stats{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:32px;position:relative;z-index:1;}
+    .avatar-stats div{border-top:1px solid rgba(255,255,255,0.15);padding-top:14px;}
+    .avatar-stats b{display:block;font-family:'Space Grotesk',sans-serif;font-size:22px;} .avatar-stats span{font-size:13px;color:#a9cbb3;}
+    .about-body p{color:var(--muted);font-size:16px;margin-top:16px;max-width:520px;}
+    .about-body .lede-note{background:var(--mint);border:1px solid var(--mint-line);border-radius:var(--radius-md);padding:20px 24px;margin-top:28px;font-size:14.5px;color:var(--forest);}
+    .about-body .lede-note strong{display:block;margin-bottom:6px;} .about-actions{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap;}
+    .process-list{display:grid;grid-template-columns:repeat(3,1fr);gap:32px 28px;}
+    .process-item{border-top:1px solid var(--line);padding-top:20px;} .process-num{font-family:'Space Grotesk',sans-serif;font-size:15px;color:var(--emerald);margin-bottom:10px;}
+    .process-item h4{font-size:17px;margin-bottom:8px;} .process-item p{color:var(--muted);font-size:14.5px;}
+    .why-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;}
+    .why-col{background:var(--white);border:1px solid var(--line);border-radius:var(--radius-lg);padding:36px;}
+    .why-col h3{font-size:20px;margin-bottom:22px;} .why-row{display:flex;gap:16px;padding:16px 0;border-top:1px solid var(--line);}
+    .why-row:first-of-type{border-top:none;padding-top:0;} .why-letter{width:30px;height:30px;flex:none;border-radius:8px;background:var(--mint);color:var(--emerald);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;}
+    .why-row h5{font-size:15px;margin-bottom:6px;} .why-row p{font-size:14px;color:var(--muted);}
+    .price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+    .price-card{border-radius:var(--radius-lg);border:1px solid var(--line);background:var(--white);padding:36px 32px;display:flex;flex-direction:column;}
+    .price-card.featured{background:var(--forest);color:#eef3ec;border-color:var(--forest);transform:translateY(-10px);}
+    .price-badge{align-self:flex-start;font-size:12.5px;font-weight:600;background:var(--mint);color:var(--emerald);padding:5px 12px;border-radius:100px;margin-bottom:18px;}
+    .price-card.featured .price-badge{background:rgba(255,255,255,0.12);color:#bfe0cc;}
+    .price-card h3{font-size:21px;} .price-card .price-sub{font-size:14px;color:var(--muted);margin-top:6px;}
+    .price-card.featured .price-sub{color:#c7d6c9;} .price-list{margin-top:24px;display:flex;flex-direction:column;gap:12px;flex:1;}
+    .price-list li{font-size:14.5px;display:flex;gap:10px;align-items:flex-start;}
+    .price-list li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--emerald);margin-top:8px;flex:none;}
+    .price-card.featured .price-list li::before{background:#7fcb9c;} .price-card .btn{margin-top:28px;justify-content:center;}
+    .test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+    .test-card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius-md);padding:30px;}
+    .stars{color:var(--gold);font-size:15px;letter-spacing:2px;margin-bottom:16px;} .test-card p{font-size:15px;color:var(--ink);}
+    .test-who{display:flex;align-items:center;gap:12px;margin-top:22px;} .test-avatar{width:38px;height:38px;border-radius:50%;background:var(--mint);color:var(--emerald);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;}
+    .test-who b{display:block;font-size:14px;} .test-who span{font-size:12.5px;color:var(--muted);}
+    .faq-list{max-width:760px;margin:0 auto;} .faq-item{border-bottom:1px solid var(--line);}
+    .faq-q{width:100%;background:none;border:none;display:flex;justify-content:space-between;align-items:center;padding:22px 4px;text-align:left;font-family:'Space Grotesk',sans-serif;font-size:16.5px;font-weight:500;color:var(--ink);cursor:pointer;}
+    .faq-q .plus{font-size:20px;color:var(--emerald);transition:transform .25s ease;flex:none;margin-left:20px;}
+    .faq-item.open .faq-q .plus{transform:rotate(45deg);} .faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease;}
+    .faq-a p{padding:0 4px 22px;color:var(--muted);font-size:14.5px;max-width:640px;}
+    .contact-grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:56px;}
+    .contact-methods{display:flex;flex-direction:column;gap:16px;margin-top:32px;}
+    .contact-method{display:flex;align-items:center;gap:16px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.14);border-radius:var(--radius-md);padding:18px 20px;transition:border-color .2s ease, background .2s ease;}
+    .contact-method:hover{border-color:rgba(255,255,255,0.35);background:rgba(255,255,255,0.1);}
+    .contact-method .icon-badge{background:rgba(255,255,255,0.12);color:#bfe0cc;margin:0;flex:none;}
+    .contact-method b{display:block;font-size:15px;} .contact-method span{font-size:13.5px;color:#b8cdbc;}
+    .contact-form{background:#fff;border-radius:var(--radius-lg);padding:36px;color:var(--ink);}
+    .contact-form h3{font-size:19px;margin-bottom:6px;} .contact-form .sub{color:var(--muted);font-size:14px;margin-bottom:24px;}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;} .form-row.full{grid-template-columns:1fr;}
+    label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;color:var(--ink);}
+    input, select, textarea{width:100%;border:1px solid var(--line);border-radius:var(--radius-sm);padding:12px 14px;font-family:'Inter',sans-serif;font-size:14.5px;background:var(--cream);color:var(--ink);}
+    textarea{resize:vertical;min-height:100px;} input:focus, select:focus, textarea:focus{outline:2px solid var(--emerald);outline-offset:1px;}
+    .contact-form .btn{width:100%;justify-content:center;margin-top:6px;}
+
+    /* footer */
+    footer{background:var(--forest-dark);color:#c7d6c9;padding:64px 0 28px;}
+    .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;padding-bottom:44px;border-bottom:1px solid rgba(255,255,255,0.1);}
+    .foot-logo{display:flex;align-items:center;gap:10px;margin-bottom:16px;} .foot-logo .logo-mark{background:rgba(255,255,255,0.1);}
+    footer h5{color:#fff;font-family:'Space Grotesk',sans-serif;font-size:15px;margin-bottom:16px;}
+    footer .foot-links{display:flex;flex-direction:column;gap:10px;} footer .foot-links a:hover{color:#fff;}
+    footer p{font-size:14px;max-width:320px;color:#9fb5a3;}
+    .foot-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:24px;flex-wrap:wrap;gap:12px;font-size:13px;color:#84987f;}
+    .foot-social{display:flex;gap:14px;} .foot-social a{width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,0.16);display:flex;align-items:center;justify-content:center;}
+    .foot-social a:hover{border-color:#fff;color:#fff;}
+
+    /* responsive */
+    @media (max-width: 980px){
+      .hero-grid{grid-template-columns:1fr;} .about-grid{grid-template-columns:1fr;}
+      .grid-3, .process-list, .proj-grid, .price-grid, .test-grid{grid-template-columns:repeat(2,1fr);}
+      .blog-grid{grid-template-columns:repeat(2,1fr);} .why-grid{grid-template-columns:1fr;}
+      .contact-grid{grid-template-columns:1fr;} .foot-grid{grid-template-columns:1fr 1fr;}
+      .detail-hero{grid-template-columns:1fr;}
+    }
+    @media (max-width: 760px){
+      .nav-links{display:none;} .burger{display:flex;} .section{padding:64px 0;}
+      .grid-3, .process-list, .proj-grid, .price-grid, .test-grid, .blog-grid{grid-template-columns:1fr;}
+      .price-card.featured{transform:none;} .form-row{grid-template-columns:1fr;}
+      .foot-grid{grid-template-columns:1fr;} .wrap{padding:0 20px;}
+      .blog-detail-content h2{font-size:26px;}
+    }
+    @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} *{transition:none !important;} }
+  </style>
+</head>
+<body>
+<header>
+  <nav class="wrap">
+    <a href="#" class="logo" id="homeLink">
+      <span class="logo-mark">&lt;/&gt;</span>
+      Priyansh Jain
+    </a>
+    <div class="nav-links">
+      <a href="#services">Services</a>
+      <a href="#about">About</a>
+      <a href="#work">Work</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#blog">Writing</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div class="nav-cta">
+      <a href="#contact" class="btn btn-primary">Let's Talk +</a>
+      <button class="burger" id="burgerBtn" aria-label="Open menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#services">Services</a><a href="#about">About</a><a href="#work">Work</a>
+    <a href="#pricing">Pricing</a><a href="#blog">Writing</a><a href="#faq">FAQ</a><a href="#contact">Contact</a>
+  </div>
+</header>
+
+<main>
+  <!-- HOME PAGE (all sections) -->
+  <div id="homePage" class="home-page">
+    <!-- HERO -->
+    <section class="hero" style="padding:76px 0 0;background:radial-gradient(circle at 10% 10%, rgba(47,107,69,0.08) 0, transparent 45%), var(--cream);overflow:hidden;">
+      <div class="wrap hero-grid" style="display:grid;grid-template-columns:1.05fr 0.95fr;gap:56px;align-items:center;padding-bottom:64px;">
+        <div>
+          <span class="tag">Available for freelance work</span>
+          <h1 style="font-size:clamp(34px,4.6vw,58px);max-width:560px;">Websites built clean, fast, and made to last.</h1>
+          <p class="lede" style="max-width:460px;font-size:18px;">I'm Priyansh Jain, a web developer who turns ideas into responsive, production-ready websites and web apps — from the first sketch to the final deploy.</p>
+          <div class="hero-actions" style="display:flex;gap:14px;margin-top:32px;flex-wrap:wrap;">
+            <a href="#work" class="btn btn-primary">View My Work +</a>
+            <a href="#contact" class="btn btn-ghost">Hire Me +</a>
+          </div>
+          <div class="hero-stats" style="display:flex;gap:28px;margin-top:44px;flex-wrap:wrap;">
+            <div class="hero-stat"><b style="display:block;font-family:'Space Grotesk',sans-serif;font-size:24px;color:var(--forest);">20+</b><span style="font-size:14px;color:var(--muted);">Projects completed</span></div>
+            <div class="hero-stat"><b style="display:block;font-family:'Space Grotesk',sans-serif;font-size:24px;color:var(--forest);">2+</b><span style="font-size:14px;color:var(--muted);">Years coding</span></div>
+            <div class="hero-stat"><b style="display:block;font-family:'Space Grotesk',sans-serif;font-size:24px;color:var(--forest);">100%</b><span style="font-size:14px;color:var(--muted);">Responsive builds</span></div>
+          </div>
+        </div>
+        <div class="code-window" style="background:var(--forest-dark);border-radius:var(--radius-lg);padding:0 0 22px;box-shadow:0 30px 60px -20px rgba(21,42,28,0.45);transform:rotate(1.2deg);">
+          <div style="display:flex;align-items:center;gap:8px;padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.08);">
+            <span style="width:11px;height:11px;border-radius:50%;background:#e5836f;"></span>
+            <span style="width:11px;height:11px;border-radius:50%;background:#e3c26f;"></span>
+            <span style="width:11px;height:11px;border-radius:50%;background:#7fcb9c;"></span>
+            <span style="margin-left:10px;font-family:'JetBrains Mono',monospace;font-size:12.5px;color:#9db7a4;">developer.js</span>
+          </div>
+          <div style="padding:22px 26px 4px;font-family:'JetBrains Mono',monospace;font-size:13.5px;line-height:1.9;color:#c9d8cd;white-space:pre;overflow-x:auto;">
+<span class="code-kw" style="color:#7fcb9c;">const</span> developer = {
+  name: <span class="code-str" style="color:#e3c26f;">"Priyansh Jain"</span>,
+  role: <span class="code-str" style="color:#e3c26f;">"Web Developer"</span>,
+  stack: [<span class="code-str" style="color:#e3c26f;">"React"</span>, <span class="code-str" style="color:#e3c26f;">"Node.js"</span>, <span class="code-str" style="color:#e3c26f;">"MongoDB"</span>],
+  focus: [<span class="code-str" style="color:#e3c26f;">"Clean code"</span>, <span class="code-str" style="color:#e3c26f;">"Fast UI"</span>],
+  status: <span class="code-str" style="color:#e3c26f;">"Available for work"</span>
+};
+
+<span class="code-kw" style="color:#7fcb9c;">function</span> <span class="code-fn" style="color:#8fb8e0;">buildWebsite</span>(idea) {
+  <span class="code-com" style="color:#5f7867;">// plan, design, build, ship</span>
+  <span class="code-kw" style="color:#7fcb9c;">return</span> <span class="code-fn" style="color:#8fb8e0;">deploy</span>(idea);
+}</div>
+        </div>
+      </div>
+      <div class="marquee-strip" style="background:var(--forest);color:#eef3ec;padding:16px 0;overflow:hidden;white-space:nowrap;">
+        <div style="display:inline-flex;gap:48px;animation:scroll 26s linear infinite;">
+          <span style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:500;color:#bfe0cc;display:inline-flex;align-items:center;gap:48px;">HTML<span style="color:#5c7f66;">•</span>CSS<span style="color:#5c7f66;">•</span>JavaScript<span style="color:#5c7f66;">•</span>React<span style="color:#5c7f66;">•</span>Node.js<span style="color:#5c7f66;">•</span>MongoDB<span style="color:#5c7f66;">•</span>Tailwind<span style="color:#5c7f66;">•</span>Git<span style="color:#5c7f66;">•</span>REST APIs<span style="color:#5c7f66;">•</span>Figma</span>
+          <span style="font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:500;color:#bfe0cc;display:inline-flex;align-items:center;gap:48px;">HTML<span style="color:#5c7f66;">•</span>CSS<span style="color:#5c7f66;">•</span>JavaScript<span style="color:#5c7f66;">•</span>React<span style="color:#5c7f66;">•</span>Node.js<span style="color:#5c7f66;">•</span>MongoDB<span style="color:#5c7f66;">•</span>Tailwind<span style="color:#5c7f66;">•</span>Git<span style="color:#5c7f66;">•</span>REST APIs<span style="color:#5c7f66;">•</span>Figma</span>
+        </div>
+      </div>
+      <style>@keyframes scroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}</style>
+    </section>
+
+    <!-- SERVICES -->
+    <section class="section" id="services">
+      <div class="wrap">
+        <div class="head-row"><div><span class="tag">Services</span><h2 class="h-title">What I can build for you</h2></div><p class="lede" style="margin:0;">Practical, well-built web work — not just something that looks good in a screenshot.</p></div>
+        <div class="grid-3">
+          <div class="card"><div class="icon-badge">⚙️</div><h3>Website Development</h3><p>Responsive, modern websites for portfolios, startups, and local businesses — built with clean, maintainable code.</p></div>
+          <div class="card"><div class="icon-badge">🎨</div><h3>UI/UX Design</h3><p>Interfaces people enjoy using — from wireframes and layout decisions to a polished, accessible final screen.</p></div>
+          <div class="card"><div class="icon-badge">🔗</div><h3>API Integration</h3><p>Connecting your website to payment gateways, databases, and third-party services so it actually does the work.</p></div>
+          <div class="card"><div class="icon-badge">⚡</div><h3>Performance Optimization</h3><p>Faster load times and smoother interactions — better Core Web Vitals, less waiting for your visitors.</p></div>
+          <div class="card"><div class="icon-badge">🔍</div><h3>SEO Setup</h3><p>Titles, meta tags, sitemaps, and semantic markup so search engines — and people — can actually find your site.</p></div>
+          <div class="card"><div class="icon-badge">🛠️</div><h3>Maintenance &amp; Support</h3><p>Ongoing updates, bug fixes, and small improvements after launch, so the site keeps working the way it should.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section class="section section--alt" id="about">
+      <div class="wrap about-grid">
+        <div class="avatar-block">
+          <div class="avatar-circle">PJ</div><h4>Priyansh Jain</h4><p class="role">Web Developer</p>
+          <div class="avatar-stats"><div><b>20+</b><span>Projects</span></div><div><b>2+</b><span>Years experience</span></div><div><b>MERN</b><span>Core stack</span></div><div><b>100%</b><span>Remote-friendly</span></div></div>
+        </div>
+        <div class="about-body">
+          <span class="tag">About me</span><h2 class="h-title">Who is Priyansh Jain?</h2>
+          <p>I'm a web developer who enjoys turning rough ideas into working products. I care about clean code, fast load times, and interfaces that don't get in the way of what people actually came to do.</p>
+          <p>Most of my work is full-stack — from the database to the deployed page — so I can take a project from a plain idea through to something live and usable.</p>
+          <div class="lede-note"><strong>How I like to work</strong>Clear planning, honest timelines, and code that's easy to hand off or build on later — no shortcuts that turn into problems after launch.</div>
+          <div class="about-actions"><a href="#work" class="btn btn-primary">View Projects +</a><a href="#contact" class="btn btn-ghost">Get In Touch</a></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section class="section">
+      <div class="wrap">
+        <div class="head-row"><div><span class="tag">Process</span><h2 class="h-title">How I build your website</h2></div><p class="lede" style="margin:0;">A simple, practical process — every project moves through the same six steps.</p></div>
+        <div class="process-list">
+          <div class="process-item"><div class="process-num">01</div><h4>Understand the goal</h4><p>Figure out what the website actually needs to do, and who it needs to work for.</p></div>
+          <div class="process-item"><div class="process-num">02</div><h4>Plan the structure</h4><p>Map out pages, content, and user flow before a single line of code is written.</p></div>
+          <div class="process-item"><div class="process-num">03</div><h4>Design the interface</h4><p>Build clean, intentional layouts that hold up on every screen size.</p></div>
+          <div class="process-item"><div class="process-num">04</div><h4>Develop with clean code</h4><p>Write maintainable, well-structured HTML, CSS, JavaScript, and React where it fits.</p></div>
+          <div class="process-item"><div class="process-num">05</div><h4>Test everything</h4><p>Check functionality, responsiveness, and performance across real devices.</p></div>
+          <div class="process-item"><div class="process-num">06</div><h4>Launch and support</h4><p>Deploy the site and stay available for fixes, tweaks, and updates after launch.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PORTFOLIO (clickable) -->
+    <section class="section section--alt" id="work">
+      <div class="wrap">
+        <div class="head-row"><div><span class="tag">Selected work</span><h2 class="h-title">A few recent projects</h2></div><p class="lede" style="margin:0;">Click any card to open the project detail page.</p></div>
+        <div class="proj-grid" id="projectGrid"></div>
+      </div>
+    </section>
+
+    <!-- WHY IT MATTERS -->
+    <section class="section">
+      <div class="wrap">
+        <div class="head-row"><div><span class="tag">Why it matters</span><h2 class="h-title">A site people trust, code that holds up</h2></div></div>
+        <div class="why-grid">
+          <div class="why-col"><h3>A site people trust</h3>
+            <div class="why-row"><div class="why-letter">A</div><div><h5>People judge fast</h5><p>A slow, cluttered site loses visitors before they've read a word.</p></div></div>
+            <div class="why-row"><div class="why-letter">B</div><div><h5>Clarity beats cleverness</h5><p>Simple navigation and clear calls-to-action get more real responses.</p></div></div>
+          </div>
+          <div class="why-col"><h3>Code that holds up</h3>
+            <div class="why-row"><div class="why-letter">C</div><div><h5>Bugs cost more later</h5><p>Clean, tested code now means fewer emergencies after launch.</p></div></div>
+            <div class="why-row"><div class="why-letter">D</div><div><h5>Growth needs structure</h5><p>A well-built site is much easier to extend as your needs change.</p></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section class="section section--alt" id="pricing">
+      <div class="wrap">
+        <div class="head-row"><div><span class="tag">Project options</span><h2 class="h-title">Choose what you need</h2></div><p class="lede" style="margin:0;">Every project starts with a short conversation — these are the usual shapes it takes.</p></div>
+        <div class="price-grid">
+          <div class="price-card"><span class="price-badge">Starter</span><h3>Starter Site</h3><p class="price-sub">For a simple, single-purpose presence</p><ul class="price-list"><li>Single-page website</li><li>Responsive layout</li><li>Basic SEO metadata</li><li>Contact section</li></ul><a href="#contact" class="btn btn-ghost">Get Started +</a></div>
+          <div class="price-card featured"><span class="price-badge">Most chosen</span><h3>Full Website</h3><p class="price-sub">A complete, ready-to-launch website</p><ul class="price-list"><li>Multi-page website</li><li>Custom UI/UX design</li><li>SEO setup and sitemap</li><li>Contact form with backend</li></ul><a href="#contact" class="btn btn-light">Get Started +</a></div>
+          <div class="price-card"><span class="price-badge">Full-stack</span><h3>Full-Stack Build</h3><p class="price-sub">For product-level web applications</p><ul class="price-list"><li>Frontend + backend</li><li>Database integration</li><li>Custom API development</li><li>Post-launch support</li></ul><a href="#contact" class="btn btn-ghost">Get Started +</a></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="section">
+      <div class="wrap">
+        <div class="head-row"><div><span class="tag">Client feedback</span><h2 class="h-title">What clients say</h2></div><p class="lede" style="margin:0;">Sample testimonials shown for illustration.</p></div>
+        <div class="test-grid">
+          <div class="test-card"><div class="stars">★★★★★</div><p>"Clear communication and fast delivery. The site turned out exactly the way we pictured it, and it works great on mobile."</p><div class="test-who"><div class="test-avatar">AS</div><div><b>Aditi Sharma</b><span>Small Business Owner</span></div></div></div>
+          <div class="test-card"><div class="stars">★★★★★</div><p>"Priyansh understood exactly what we needed and kept things simple. The contact flow became much easier for our customers."</p><div class="test-who"><div class="test-avatar">RM</div><div><b>Rohan Mehta</b><span>Startup Founder</span></div></div></div>
+          <div class="test-card"><div class="stars">★★★★★</div><p>"Good code, clean structure, and easy to extend later. Exactly what I was looking for in a developer."</p><div class="test-who"><div class="test-avatar">SK</div><div><b>Sanya Kapoor</b><span>Product Manager</span></div></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BLOG (clickable) -->
+    <section class="section section--alt" id="blog">
+      <div class="wrap">
+        <div class="head-row"><div><span class="tag">Writing</span><h2 class="h-title">Notes on building the web</h2></div><p class="lede" style="margin:0;">Click any card to read the full article.</p></div>
+        <div class="blog-grid" id="blogGrid"></div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq">
+      <div class="wrap">
+        <div class="head-row" style="justify-content:center;text-align:center;"><div style="width:100%;"><span class="tag">FAQ</span><h2 class="h-title" style="max-width:none;">Questions? Look here.</h2></div></div>
+        <div class="faq-list">
+          <div class="faq-item"><button class="faq-q">What technologies do you work with?<span class="plus">+</span></button><div class="faq-a"><p>HTML, CSS, JavaScript, React, Node.js, and MongoDB, along with other tools depending on what the project needs.</p></div></div>
+          <div class="faq-item"><button class="faq-q">Do you build both frontend and backend?<span class="plus">+</span></button><div class="faq-a"><p>Yes — I work full-stack, from the interface all the way through to the database and API.</p></div></div>
+          <div class="faq-item"><button class="faq-q">How long does a typical project take?<span class="plus">+</span></button><div class="faq-a"><p>It depends on scope. A simple site might take about a week; a full-stack build takes longer. I'll give you a clear timeline before we start.</p></div></div>
+          <div class="faq-item"><button class="faq-q">Can you redesign an existing website?<span class="plus">+</span></button><div class="faq-a"><p>Yes — I can rebuild or improve an existing site's design, code, or performance without starting completely from scratch.</p></div></div>
+          <div class="faq-item"><button class="faq-q">Do you offer support after launch?<span class="plus">+</span></button><div class="faq-a"><p>Yes — I offer maintenance and updates after the site goes live, so it keeps working the way it should.</p></div></div>
+          <div class="faq-item"><button class="faq-q">How do we get started?<span class="plus">+</span></button><div class="faq-a"><p>Reach out over email, phone, or GitHub with your idea, and I'll get back to you with the simplest next step.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="section section--forest" id="contact">
+      <div class="wrap contact-grid">
+        <div><span class="tag">Contact</span><h2 class="h-title" style="color:#fff;">Start with a clear conversation</h2><p class="lede">Tell me what you need, and I'll get back to you with a clear, simple next step.</p>
+          <div class="contact-methods">
+            <a class="contact-method" href="tel:+916378748417"><div class="icon-badge">📞</div><div><b>Call</b><span>+91 63787 48417</span></div></a>
+            <a class="contact-method" href="mailto:priyanshjain08.official@gmail.com"><div class="icon-badge">✉️</div><div><b>Email</b><span>priyanshjain08.official@gmail.com</span></div></a>
+            <a class="contact-method" href="https://github.com/priyanshjain08" target="_blank"><div class="icon-badge">🐙</div><div><b>GitHub</b><span>github.com/priyanshjain08</span></div></a>
+          </div>
+        </div>
+        <div class="contact-form">
+          <h3>Tell me about your project</h3><p class="sub">Fill this in and it'll open a ready-to-send email.</p>
+          <form id="contactForm">
+            <div class="form-row"><div><label for="cf-name">Your name</label><input type="text" id="cf-name" required></div><div><label for="cf-email">Your email</label><input type="email" id="cf-email" required></div></div>
+            <div class="form-row full"><div><label for="cf-type">Project type</label><select id="cf-type"><option>Website Development</option><option>UI/UX Design</option><option>API Integration</option><option>Full-Stack Web App</option><option>Maintenance / Support</option><option>Other</option></select></div></div>
+            <div class="form-row full"><div><label for="cf-msg">Project details</label><textarea id="cf-msg" placeholder="What are you trying to build?" required></textarea></div></div>
+            <button type="submit" class="btn btn-primary">Send Project Details +</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- PROJECT DETAIL PAGE -->
+  <section id="projectDetailPage" class="project-detail-page">
+    <div class="wrap">
+      <div class="detail-back" id="backToHome">← Back to projects</div>
+      <div id="detailContent"></div>
+    </div>
+  </section>
+
+  <!-- BLOG DETAIL PAGE -->
+  <section id="blogDetailPage" class="blog-detail-page">
+    <div class="wrap">
+      <div class="detail-back" id="backToBlog">← Back to writing</div>
+      <div id="blogDetailContent" class="blog-detail-content"></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div><div class="foot-logo"><span class="logo-mark">&lt;/&gt;</span><span style="font-family:'Space Grotesk',sans-serif;font-size:17px;color:#fff;">Priyansh Jain</span></div><p>A web developer building fast, clean websites and full-stack web apps for businesses, startups, and individuals.</p></div>
+      <div><h5>Navigation</h5><div class="foot-links"><a href="#services">Services</a><a href="#about">About</a><a href="#work">Work</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a></div></div>
+      <div><h5>Contact</h5><div class="foot-links"><a href="tel:+916378748417">+91 63787 48417</a><a href="mailto:priyanshjain08.official@gmail.com">priyanshjain08.official@gmail.com</a><a href="https://github.com/priyanshjain08" target="_blank">github.com/priyanshjain08</a></div></div>
+    </div>
+    <div class="foot-bottom"><span>Copyright 2026 Priyansh Jain. All rights reserved.</span><div class="foot-social"><a href="https://github.com/priyanshjain08" target="_blank" aria-label="GitHub">🐙</a></div></div>
+  </div>
+</footer>
+
+<script>
+  (function() {
+    // ----- project data -----
+    const projects = [
+      { id: 'taskflow', title: 'TaskFlow', tag: 'Web App', desc: 'A task management dashboard with drag-and-drop boards, deadlines, and team assignments.', thumb: 'TF', bg: 'linear-gradient(135deg,#2f6b45,#1f3d2b)', detail: 'TaskFlow is a full-featured productivity tool. It includes real-time collaboration, task priorities, and a clean kanban interface. Built with React and Node.js.' },
+      { id: 'quickbite', title: 'QuickBite', tag: 'E-commerce', desc: 'Online ordering site for a restaurant chain, with a live menu and cart checkout flow.', thumb: 'QB', bg: 'linear-gradient(135deg,#c79a4d,#8a6a2f)', detail: 'QuickBite handles live menu updates, order tracking, and payment integration. The frontend is responsive and the backend uses MongoDB.' },
+      { id: 'fittrack', title: 'FitTrack', tag: 'Web App', desc: 'A fitness tracker with workout logging, streaks, and simple progress charts.', thumb: 'FT', bg: 'linear-gradient(135deg,#3f8a5c,#2f6b45)', detail: 'FitTrack lets users log workouts, track streaks, and visualize progress. Built with React and Express, with a focus on simplicity.' },
+      { id: 'nimbus', title: 'Nimbus Notes', tag: 'Productivity', desc: 'A minimal note-taking app with markdown support and cloud sync across devices.', thumb: 'NN', bg: 'linear-gradient(135deg,#5c6b53,#1f3d2b)', detail: 'Nimbus Notes offers markdown editing, tags, and real-time sync. The app is built with React and Firebase for a seamless experience.' },
+      { id: 'devconnect', title: 'DevConnect', tag: 'Community', desc: 'A community platform for developers to share projects and find collaborators.', thumb: 'DC', bg: 'linear-gradient(135deg,#1f3d2b,#0e1f14)', detail: 'DevConnect is a social platform for developers. It features project boards, user profiles, and a matching algorithm to find collaborators.' },
+      { id: 'lumen', title: 'Lumen Realty', tag: 'Business Site', desc: 'A real estate agency website with property listings, filters, and inquiry forms.', thumb: 'LR', bg: 'linear-gradient(135deg,#8a6a2f,#c79a4d)', detail: 'Lumen Realty is a modern real estate site with advanced search filters, property details, and a contact form that sends inquiries to the agency.' }
+    ];
+
+    // ----- blog data (full articles) -----
+    const blogPosts = [
+      { 
+        id: 'clean-code', 
+        cat: 'Development', 
+        title: 'Why clean code saves you time later', 
+        thumb: 'linear-gradient(135deg,#2f6b45,#1f3d2b)',
+        readTime: '4 min read',
+        body: `<p>Writing clean code isn't just about aesthetics — it's about saving your future self (and your team) from hours of debugging and confusion. Clean code is readable, maintainable, and predictable.</p>
+        <p><strong>What makes code "clean"?</strong> It's code that clearly expresses its intent. Variables have meaningful names, functions do one thing, and the structure follows consistent patterns. When you come back to it six months later, you don't have to spend time figuring out what you were thinking.</p>
+        <p><strong>The hidden cost of messy code:</strong> Every time you work around a confusing function or add a patch because the original design wasn't clear, you're building technical debt. That debt compounds — bugs take longer to fix, new features take longer to add, and the whole thing becomes fragile.</p>
+        <p><strong>Start with clean code from day one.</strong> It's not slower — it's actually faster in the long run. A little extra care upfront saves days of maintenance work down the line. That's why clean code is the foundation of every project I build.</p>`
+      },
+      { 
+        id: 'responsive-design', 
+        cat: 'Design', 
+        title: 'Responsive design isn\'t optional anymore', 
+        thumb: 'linear-gradient(135deg,#c79a4d,#8a6a2f)',
+        readTime: '3 min read',
+        body: `<p>More than half of all web traffic comes from mobile devices. If your site doesn't work well on a phone, you're turning away a majority of your visitors.</p>
+        <p><strong>Mobile-first approach:</strong> Building for the smallest screen first forces you to prioritize what matters. Start with the essential content and progressively enhance for larger screens. This makes your site faster and more focused.</p>
+        <p><strong>Test on real devices:</strong> Emulators are useful, but they don't capture the full experience. The way a site feels on an actual phone — touch targets, load times, scrolling — is what really matters. I test on multiple devices to make sure it works everywhere.</p>
+        <p><strong>It's not just about phones.</strong> Responsive design also means tablets, large desktop screens, and everything in between. A layout that works on all of them is a layout that reaches everyone.</p>`
+      },
+      { 
+        id: 'rest-apis', 
+        cat: 'Backend', 
+        title: 'Getting started with REST APIs', 
+        thumb: 'linear-gradient(135deg,#3f8a5c,#2f6b45)',
+        readTime: '5 min read',
+        body: `<p>REST (Representational State Transfer) is the most common way to build APIs for web applications. It's a set of principles for building scalable, stateless services that communicate over HTTP.</p>
+        <p><strong>Understanding resources and endpoints:</strong> In REST, everything is a resource — users, posts, products. Each resource has a URL endpoint (like <code>/api/users</code>) and can be manipulated using HTTP methods: GET to read, POST to create, PUT to update, DELETE to remove.</p>
+        <p><strong>Why REST works:</strong> It uses the same HTTP that powers the web itself. That means it's widely understood, works with any programming language, and can be easily cached and scaled. It's also stateless, which means each request contains all the information needed to process it.</p>
+        <p><strong>Common REST patterns:</strong> Versioning your API (<code>/v1/users</code>), using proper status codes (200 for success, 404 for not found), and returning consistent JSON responses are all good practices that make your API easier to use and maintain.</p>`
+      },
+      { 
+        id: 'portfolio-essentials', 
+        cat: 'Career', 
+        title: 'Five things every portfolio site needs', 
+        thumb: 'linear-gradient(135deg,#5c6b53,#1f3d2b)',
+        readTime: '3 min read',
+        body: `<p>Your portfolio is often the first impression you make on potential clients or employers. Here are five things that make a portfolio effective — and how to get them right.</p>
+        <p><strong>1. Clear purpose:</strong> What do you do? Who is it for? Your portfolio should answer these questions within seconds. A headline and a short tagline are usually enough.</p>
+        <p><strong>2. Your best work first:</strong> Showcase a few strong projects rather than everything you've done. Each project should have a clear description, your role, and results. Quality over quantity.</p>
+        <p><strong>3. Easy contact:</strong> Make it simple for someone to reach you. A visible contact button, email link, or contact form prevents people from leaving without getting in touch.</p>
+        <p><strong>4. Your personality:</strong> Portfolios that feel human and authentic stand out. Show a bit of who you are — how you work, what you care about, what you're looking for.</p>
+        <p><strong>5. Fast and responsive:</strong> A portfolio that's slow or broken on mobile sends the wrong message. Make sure it loads quickly and looks good on every screen.</p>`
+      }
+    ];
+
+    const projectGrid = document.getElementById('projectGrid');
+    const blogGrid = document.getElementById('blogGrid');
+    const homePage = document.getElementById('homePage');
+    const projectDetail = document.getElementById('projectDetailPage');
+    const blogDetail = document.getElementById('blogDetailPage');
+    const detailContent = document.getElementById('detailContent');
+    const blogDetailContent = document.getElementById('blogDetailContent');
+    const backToHome = document.getElementById('backToHome');
+    const backToBlog = document.getElementById('backToBlog');
+
+    // ---- render projects ----
+    function renderProjects() {
+      projectGrid.innerHTML = projects.map(p => `
+        <div class="proj-card" data-id="${p.id}">
+          <div class="proj-thumb" style="background:${p.bg};"><span class="mark">${p.thumb}</span></div>
+          <div class="proj-body">
+            <span class="proj-tag">${p.tag}</span>
+            <h3>${p.title}</h3>
+            <p>${p.desc}</p>
+          </div>
+        </div>
+      `).join('');
+      projectGrid.querySelectorAll('.proj-card').forEach(card => {
+        card.addEventListener('click', function() {
+          const id = this.dataset.id;
+          const project = projects.find(p => p.id === id);
+          if (project) showProjectDetail(project);
+        });
+      });
+    }
+
+    // ---- render blog ----
+    function renderBlog() {
+      blogGrid.innerHTML = blogPosts.map(p => `
+        <div class="blog-card" data-id="${p.id}">
+          <div class="blog-thumb" style="background:${p.thumb};"></div>
+          <div class="blog-body">
+            <span class="blog-cat">${p.cat}</span>
+            <h4>${p.title}</h4>
+          </div>
+        </div>
+      `).join('');
+      blogGrid.querySelectorAll('.blog-card').forEach(card => {
+        card.addEventListener('click', function() {
+          const id = this.dataset.id;
+          const post = blogPosts.find(b => b.id === id);
+          if (post) showBlogDetail(post);
+        });
+      });
+    }
+
+    // ---- show project detail ----
+    function showProjectDetail(project) {
+      homePage.style.display = 'none';
+      projectDetail.classList.add('active');
+      projectDetail.style.display = 'block';
+      blogDetail.classList.remove('active');
+      blogDetail.style.display = 'none';
+      detailContent.innerHTML = `
+        <div class="detail-hero">
+          <div>
+            <div class="proj-thumb" style="background:${project.bg};height:280px;border-radius:var(--radius-md);display:flex;align-items:flex-end;padding:24px;">
+              <span class="mark" style="font-size:48px;color:rgba(255,255,255,0.9);">${project.thumb}</span>
+            </div>
+          </div>
+          <div>
+            <span class="tag" style="margin-bottom:12px;">${project.tag}</span>
+            <h2 style="font-size:36px;">${project.title}</h2>
+            <div class="detail-meta"><span>${project.tag}</span><span>Completed</span></div>
+            <p class="detail-desc">${project.detail}</p>
+            <div class="detail-actions">
+              <a href="#contact" class="btn btn-primary">Inquire about this project</a>
+              <span class="btn btn-ghost" id="backFromDetail" style="cursor:pointer;">← Back</span>
+            </div>
+          </div>
+        </div>
+      `;
+      document.getElementById('backFromDetail').addEventListener('click', showHome);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ---- show blog detail ----
+    function showBlogDetail(post) {
+      homePage.style.display = 'none';
+      blogDetail.classList.add('active');
+      blogDetail.style.display = 'block';
+      projectDetail.classList.remove('active');
+      projectDetail.style.display = 'none';
+      blogDetailContent.innerHTML = `
+        <div class="blog-thumb" style="background:${post.thumb};height:220px;border-radius:var(--radius-md);"></div>
+        <span class="blog-cat" style="font-size:14px;">${post.cat}</span>
+        <h2>${post.title}</h2>
+        <div class="blog-meta"><span>${post.readTime}</span><span>•</span><span>${post.cat}</span></div>
+        <div class="blog-body-text">${post.body}</div>
+        <div style="margin-top:32px;display:flex;gap:12px;">
+          <span class="btn btn-ghost" id="backFromBlog" style="cursor:pointer;">← Back to writing</span>
+          <a href="#contact" class="btn btn-primary">Discuss this topic</a>
+        </div>
+      `;
+      document.getElementById('backFromBlog').addEventListener('click', showHome);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ---- show home ----
+    function showHome() {
+      homePage.style.display = 'block';
+      projectDetail.classList.remove('active');
+      projectDetail.style.display = 'none';
+      blogDetail.classList.remove('active');
+      blogDetail.style.display = 'none';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    backToHome.addEventListener('click', showHome);
+    backToBlog.addEventListener('click', showHome);
+    document.getElementById('homeLink').addEventListener('click', function(e) {
+      e.preventDefault(); showHome();
+    });
+
+    // ---- mobile menu ----
+    document.getElementById('burgerBtn').addEventListener('click', function() {
+      document.getElementById('mobileMenu').classList.toggle('open');
+    });
+    document.querySelectorAll('.mobile-menu a').forEach(a => {
+      a.addEventListener('click', function() {
+        document.getElementById('mobileMenu').classList.remove('open');
+      });
+    });
+
+    // ---- FAQ accordion ----
+    document.querySelectorAll('.faq-item').forEach(item => {
+      const q = item.querySelector('.faq-q');
+      const a = item.querySelector('.faq-a');
+      q.addEventListener('click', () => {
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(other => {
+          other.classList.remove('open');
+          other.querySelector('.faq-a').style.maxHeight = null;
+        });
+        if (!isOpen) {
+          item.classList.add('open');
+          a.style.maxHeight = a.scrollHeight + 'px';
+        }
+      });
+    });
+
+    // ---- contact form ----
+    document.getElementById('contactForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      const name = document.getElementById('cf-name').value;
+      const email = document.getElementById('cf-email').value;
+      const type = document.getElementById('cf-type').value;
+      const msg = document.getElementById('cf-msg').value;
+      const subject = encodeURIComponent('New project: ' + type);
+      const body = encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\nType: ' + type + '\n\n' + msg);
+      window.location.href = 'mailto:priyanshjain08.official@gmail.com?subject=' + subject + '&body=' + body;
+    });
+
+    // ---- init ----
+    renderProjects();
+    renderBlog();
+    showHome();
+  })();
+</script>
+</body>
+</html>
