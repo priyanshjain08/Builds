@@ -8,11 +8,11 @@ This folder contains different portfolio concepts, each with its own design and 
 
 | Project | Description |
 |---|---|
-| Portfolio 01 | Minimal and clean portfolio design |
-| Portfolio 02 | Modern developer portfolio |
-| Portfolio 03 | Creative portfolio concept |
-| Portfolio 04 | Dark-themed portfolio |
-| Portfolio 05 | Experimental portfolio design |
+| Portfolio 01 | Professional developer portfolio |
+| Portfolio 02 | Dark editorial developer portfolio |
+| Portfolio 03 | Swiss-inspired minimalist portfolio |
+| Portfolio 04 | Futuristic cyber-themed portfolio |
+| Portfolio 05 | Creative agency-style portfolio |
 
 ## 🛠️ Technologies
 
