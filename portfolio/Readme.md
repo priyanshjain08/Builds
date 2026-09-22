@@ -13,6 +13,7 @@ This folder contains different portfolio concepts, each with its own design and 
 | Portfolio 03 | Swiss-inspired minimalist portfolio |
 | Portfolio 04 | Futuristic cyber-themed portfolio |
 | Portfolio 05 | Creative agency-style portfolio |
+| Portfolio 06 | Bento Grid portfolio |
 
 ## 🛠️ Technologies
 
