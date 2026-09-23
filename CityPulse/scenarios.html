@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CITYPULSE — urban early-warning and resilience prototype.">
+  <title>CITYPULSE — Scenario Simulator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="noise"></div>
+
+  <header class="topbar">
+    <a class="brand" href="index.html" aria-label="CITYPULSE home">
+    <img src="citypulse-logo.png" alt="CITYPULSE">
+</a>
+    <!-- <a class="brand" href="#overview" aria-label="CITYPULSE home">
+      <span class="brand-mark" aria-hidden="true">
+        <span class="city-bars"><i></i><i></i><i></i><i></i></span>
+        <span class="pulse"></span>
+      </span>
+      <span>CITY<span>PULSE</span></span>
+    </a> -->
+
+    <nav class="nav" aria-label="Primary navigation">
+      <a href="overview.html">Overview</a>
+      <a href="risks.html">Risks</a>
+      <a href="map.html">Map</a>
+      <a href="my-area.html">My Area</a>
+      <a href="command.html">Command</a><a href="scenarios.html">Simulate</a>
+      <a href="future.html">Future</a>
+    </nav>
+
+    <div class="top-status"><span class="status-dot"></span> SIGNALS NOMINAL</div><div class="demo-pill"><b></b> DEMO MODE</div>
+    <button class="menu-btn" id="menuBtn" aria-label="Open navigation">☰</button>
+  </header>
+
+  <main>
+    <section class="section scenario-section" id="scenarios">
+          <div class="section-heading split">
+            <div>
+              <span class="section-num">08</span><span class="eyebrow">SCENARIO SIMULATOR</span>
+              <h2>What if the<br><em>city changes?</em></h2>
+            </div>
+            <div class="scenario-kicker"><span class="pulse-dot"></span> MODEL PREVIEW</div>
+          </div>
+          <div class="scenario-shell">
+            <div class="scenario-controls">
+              <span class="eyebrow">CHOOSE A SCENARIO</span>
+              <button class="scenario-btn active" data-scenario="rain">Rainfall −20%</button>
+              <button class="scenario-btn" data-scenario="green">Green coverage +15%</button>
+              <button class="scenario-btn" data-scenario="heat">Extreme heat +3°C</button>
+              <div class="scenario-note">Illustrative prototype simulation — not a forecast.</div>
+            </div>
+            <div class="scenario-result">
+              <div class="scenario-result-head">
+                <div><span class="eyebrow">PROJECTED CASCADE</span><h3>Rainfall −20%</h3></div>
+                <div class="scenario-score"><strong>72 → 61</strong><small>RESILIENCE INDEX</small></div>
+              </div>
+              <div class="cascade" id="cascade">
+                <div><span>RAINFALL</span><b>−20%</b></div><i>↓</i>
+                <div><span>WATER STRESS</span><b>+18%</b></div><i>↓</i>
+                <div><span>ENERGY PRESSURE</span><b>+7%</b></div><i>↓</i>
+                <div><span>CITY RESILIENCE</span><b>72 → 61</b></div>
+              </div>
+            </div>
+          </div>
+        </section>
+  </main>
+
+  <footer>
+    <span>© 2026 CITYPULSE — COMPETITION PROTOTYPE</span>
+    <span>SIMULATED DATA · NOT AN EMERGENCY SERVICE</span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

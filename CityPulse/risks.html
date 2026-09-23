@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CITYPULSE — urban early-warning and resilience prototype.">
+  <title>CITYPULSE — Emerging Risks</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="noise"></div>
+
+  <header class="topbar">
+    <a class="brand" href="index.html" aria-label="CITYPULSE home">
+    <img src="citypulse-logo.png" alt="CITYPULSE">
+</a>
+    <!-- <a class="brand" href="#overview" aria-label="CITYPULSE home">
+      <span class="brand-mark" aria-hidden="true">
+        <span class="city-bars"><i></i><i></i><i></i><i></i></span>
+        <span class="pulse"></span>
+      </span>
+      <span>CITY<span>PULSE</span></span>
+    </a> -->
+
+    <nav class="nav" aria-label="Primary navigation">
+      <a href="overview.html">Overview</a>
+      <a href="risks.html">Risks</a>
+      <a href="map.html">Map</a>
+      <a href="my-area.html">My Area</a>
+      <a href="command.html">Command</a><a href="scenarios.html">Simulate</a>
+      <a href="future.html">Future</a>
+    </nav>
+
+    <div class="top-status"><span class="status-dot"></span> SIGNALS NOMINAL</div><div class="demo-pill"><b></b> DEMO MODE</div>
+    <button class="menu-btn" id="menuBtn" aria-label="Open navigation">☰</button>
+  </header>
+
+  <main>
+    <section class="section risks-section" id="risks">
+          <div class="section-heading">
+            <span class="section-num">03</span><span class="eyebrow">EMERGING RISKS</span>
+            <h2>Tomorrow’s problems<br><em>leave signals today.</em></h2>
+          </div>
+          <div class="risk-layout">
+            <div class="risk-list" id="riskList"></div>
+            <div class="risk-detail" id="riskDetail"></div>
+          </div>
+        </section>
+  </main>
+
+  <footer>
+    <span>© 2026 CITYPULSE — COMPETITION PROTOTYPE</span>
+    <span>SIMULATED DATA · NOT AN EMERGENCY SERVICE</span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CITYPULSE — urban early-warning and resilience prototype.">
+  <title>CITYPULSE — See What's Coming</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="noise"></div>
+
+  <header class="topbar">
+    <a class="brand" href="index.html" aria-label="CITYPULSE home">
+    <img src="citypulse-logo.png" alt="CITYPULSE">
+</a>
+    <!-- <a class="brand" href="#overview" aria-label="CITYPULSE home">
+      <span class="brand-mark" aria-hidden="true">
+        <span class="city-bars"><i></i><i></i><i></i><i></i></span>
+        <span class="pulse"></span>
+      </span>
+      <span>CITY<span>PULSE</span></span>
+    </a> -->
+
+    <nav class="nav" aria-label="Primary navigation">
+      <a href="overview.html">Overview</a>
+      <a href="risks.html">Risks</a>
+      <a href="map.html">Map</a>
+      <a href="my-area.html">My Area</a>
+      <a href="command.html">Command</a><a href="scenarios.html">Simulate</a>
+      <a href="future.html">Future</a>
+    </nav>
+
+    <div class="top-status"><span class="status-dot"></span> SIGNALS NOMINAL</div><div class="demo-pill"><b></b> DEMO MODE</div>
+    <button class="menu-btn" id="menuBtn" aria-label="Open navigation">☰</button>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+          <div class="hero-grid">
+            <div class="hero-copy">
+              <div class="hero-logo animated-logo">
+        <img src="citypulse-logo.png" alt="CITYPULSE">
+
+        <svg class="pulse-overlay" viewBox="0 0 1254 1254" aria-hidden="true">
+            <path
+                d="M342 550
+                   L570 550
+                   L620 407
+                   L674 650
+                   L718 550
+                   L1082 550"
+            />
+        </svg>
+    </div>
+              <!-- <div class="hero-logo">
+        <img src="assets/citypulse-logo.png" alt="CITYPULSE">
+    </div> -->
+              <div class="eyebrow"><span></span> URBAN EARLY-WARNING SYSTEM</div>
+              <h1>SEE WHAT’S<br><em>COMING.</em></h1>
+              <p class="hero-text">CITYPULSE transforms scattered urban signals into an early-warning view of the city — helping people and decision-makers understand risks before they become crises.</p>
+              <div class="hero-actions">
+                <a class="btn btn-primary" href="overview.html">Explore City <span>↗</span></a>
+                <a class="btn btn-ghost" href="#how">How it works</a>
+              </div>
+            </div>
+
+            <div class="hero-visual">
+              <div class="radar">
+                <div class="radar-ring r1"></div>
+                <div class="radar-ring r2"></div>
+                <div class="radar-ring r3"></div>
+                <div class="radar-cross x"></div>
+                <div class="radar-cross y"></div>
+                <div class="radar-sweep"></div>
+                <div class="radar-dot d1"></div>
+                <div class="radar-dot d2"></div>
+                <div class="radar-dot d3"></div>
+                <div class="radar-core">72</div>
+              </div>
+              <div class="signal-card">
+                <span>LIVE SIGNAL SYNTHESIS</span>
+                <strong>3 emerging risks detected</strong>
+                <small>Multiple urban signals moving in the same direction.</small>
+              </div>
+            </div>
+          </div>
+          <div class="hero-ticker">
+            <span>CITY RESILIENCE</span><b>72 / 100</b><span>STATUS</span><strong>WATCH</strong>
+            <span class="ticker-line"></span>
+            <span>8 URBAN SIGNALS</span><b>3 PRIORITY RISKS</b>
+          </div>
+        </section>
+
+    <section class="section story" id="how">
+          <div class="section-heading">
+            <div><span class="section-num">01</span><span class="eyebrow">THE PROBLEM</span></div>
+            <h2>Cities don’t experience<br><em>problems one at a time.</em></h2>
+          </div>
+          <p class="lead">A heatwave can increase water demand. Heavy rain can disrupt roads, increase traffic and worsen air quality. CITYPULSE connects these signals instead of treating them as isolated numbers.</p>
+
+          <div class="chain-grid">
+            <div class="chain-card">
+              <div class="chain-label">SCENARIO A</div>
+              <div class="chain-title">EXTREME HEAT</div>
+              <div class="chain-flow">
+                <span>HEAT <b>↑</b></span><i>→</i><span>WATER DEMAND <b>↑</b></span><i>→</i><span>ENERGY PRESSURE <b>↑</b></span>
+              </div>
+            </div>
+            <div class="chain-card">
+              <div class="chain-label">SCENARIO B</div>
+              <div class="chain-title">HEAVY RAIN</div>
+              <div class="chain-flow">
+                <span>FLOOD RISK <b>↑</b></span><i>→</i><span>ROAD DISRUPTION <b>↑</b></span><i>→</i><span>TRAFFIC <b>↑</b></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="process">
+            <div><span>01</span><strong>SIGNAL</strong><small>Collect urban indicators</small></div>
+            <div><span>02</span><strong>ANALYSIS</strong><small>Connect changing signals</small></div>
+            <div class="active"><span>03</span><strong>EARLY WARNING</strong><small>Surface emerging risks</small></div>
+            <div><span>04</span><strong>ACTION</strong><small>Prepare before escalation</small></div>
+          </div>
+        </section>
+  </main>
+
+  <footer>
+    <span>© 2026 CITYPULSE — COMPETITION PROTOTYPE</span>
+    <span>SIMULATED DATA · NOT AN EMERGENCY SERVICE</span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

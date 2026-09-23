@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CITYPULSE — urban early-warning and resilience prototype.">
+  <title>CITYPULSE — Command Center</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="noise"></div>
+
+  <header class="topbar">
+    <a class="brand" href="index.html" aria-label="CITYPULSE home">
+    <img src="citypulse-logo.png" alt="CITYPULSE">
+</a>
+    <!-- <a class="brand" href="#overview" aria-label="CITYPULSE home">
+      <span class="brand-mark" aria-hidden="true">
+        <span class="city-bars"><i></i><i></i><i></i><i></i></span>
+        <span class="pulse"></span>
+      </span>
+      <span>CITY<span>PULSE</span></span>
+    </a> -->
+
+    <nav class="nav" aria-label="Primary navigation">
+      <a href="overview.html">Overview</a>
+      <a href="risks.html">Risks</a>
+      <a href="map.html">Map</a>
+      <a href="my-area.html">My Area</a>
+      <a href="command.html">Command</a><a href="scenarios.html">Simulate</a>
+      <a href="future.html">Future</a>
+    </nav>
+
+    <div class="top-status"><span class="status-dot"></span> SIGNALS NOMINAL</div><div class="demo-pill"><b></b> DEMO MODE</div>
+    <button class="menu-btn" id="menuBtn" aria-label="Open navigation">☰</button>
+  </header>
+
+  <main>
+    <section class="section command-section" id="command">
+          <div class="section-heading split">
+            <div>
+              <span class="section-num">06</span><span class="eyebrow">CITY COMMAND CENTER</span>
+              <h2>From signals to<br><em>situational awareness.</em></h2>
+            </div>
+            <div class="system-status"><b></b> SYSTEM OPERATIONAL</div>
+          </div>
+
+          <div class="command-stats">
+            <div><small>ACTIVE RISKS</small><strong>03</strong></div>
+            <div><small>PRIORITY ZONES</small><strong>02</strong></div>
+            <div><small>EARLY WARNINGS</small><strong>05</strong></div>
+            <div><small>SIGNALS TRACKED</small><strong>08</strong></div>
+          </div>
+
+          <div class="command-table">
+            <div class="table-head"><span>RISK</span><span>LOCATION</span><span>SEVERITY</span><span>TREND</span><span>STATUS</span></div>
+            <div class="table-row"><b>Water Stress</b><span>Zone 03</span><em class="danger">High</em><span>↑</span><span>Warning</span></div>
+            <div class="table-row"><b>Extreme Heat</b><span>Zone 04</span><em class="warn">Elevated</em><span>↑</span><span>Watch</span></div>
+            <div class="table-row"><b>Flood Risk</b><span>Zone 02</span><em class="danger">High</em><span>→</span><span>Monitoring</span></div>
+            <div class="table-row"><b>Air Quality</b><span>Zone 01</span><em class="warn">Elevated</em><span>↑</span><span>Watch</span></div>
+          </div>
+        </section>
+
+    <section class="section connections-section">
+          <div class="section-heading">
+            <span class="section-num">07</span><span class="eyebrow">INTERCONNECTED RISK ENGINE</span>
+            <h2>One signal can<br><em>change the whole city.</em></h2>
+          </div>
+
+          <div class="network">
+            <div class="network-column">
+              <div class="node node-hot" data-node="heat">EXTREME HEAT</div>
+              <div class="connector"></div>
+              <div class="node" data-node="water">WATER DEMAND <b>↑</b></div>
+              <div class="connector"></div>
+              <div class="node" data-node="energy">ENERGY PRESSURE <b>↑</b></div>
+            </div>
+            <div class="network-center">
+              <div class="network-core">CITY<br>PULSE</div>
+              <span>CONNECTED<br>SIGNALS</span>
+            </div>
+            <div class="network-column">
+              <div class="node node-rain" data-node="rain">HEAVY RAIN</div>
+              <div class="connector"></div>
+              <div class="node" data-node="flood">FLOOD RISK <b>↑</b></div>
+              <div class="connector"></div>
+              <div class="node" data-node="traffic">TRAFFIC <b>↑</b></div>
+            </div>
+          </div>
+          <div class="network-explain" id="networkExplain">Click a signal to see how CITYPULSE connects it to other urban pressures.</div>
+        </section>
+  </main>
+
+  <footer>
+    <span>© 2026 CITYPULSE — COMPETITION PROTOTYPE</span>
+    <span>SIMULATED DATA · NOT AN EMERGENCY SERVICE</span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CITYPULSE — urban early-warning and resilience prototype.">
+  <title>CITYPULSE — Risk Map</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="noise"></div>
+
+  <header class="topbar">
+    <a class="brand" href="index.html" aria-label="CITYPULSE home">
+    <img src="citypulse-logo.png" alt="CITYPULSE">
+</a>
+    <!-- <a class="brand" href="#overview" aria-label="CITYPULSE home">
+      <span class="brand-mark" aria-hidden="true">
+        <span class="city-bars"><i></i><i></i><i></i><i></i></span>
+        <span class="pulse"></span>
+      </span>
+      <span>CITY<span>PULSE</span></span>
+    </a> -->
+
+    <nav class="nav" aria-label="Primary navigation">
+      <a href="overview.html">Overview</a>
+      <a href="risks.html">Risks</a>
+      <a href="map.html">Map</a>
+      <a href="my-area.html">My Area</a>
+      <a href="command.html">Command</a><a href="scenarios.html">Simulate</a>
+      <a href="future.html">Future</a>
+    </nav>
+
+    <div class="top-status"><span class="status-dot"></span> SIGNALS NOMINAL</div><div class="demo-pill"><b></b> DEMO MODE</div>
+    <button class="menu-btn" id="menuBtn" aria-label="Open navigation">☰</button>
+  </header>
+
+  <main>
+    <section class="section map-section" id="map">
+          <div class="section-heading split">
+            <div>
+              <span class="section-num">04</span><span class="eyebrow">RISK MAP</span>
+              <h2>Where is the city<br><em>under pressure?</em></h2>
+            </div>
+            <div class="map-legend">
+              <span><i class="stable"></i> Stable</span>
+              <span><i class="watch"></i> Watch</span>
+              <span><i class="elevated"></i> Elevated</span>
+              <span><i class="high"></i> High</span>
+            </div>
+          </div>
+
+          <div class="map-shell">
+            <div class="city-map" id="cityMap">
+              <div class="map-road road-a"></div><div class="map-road road-b"></div>
+              <div class="map-road road-c"></div><div class="map-road road-d"></div>
+              <div class="zone z1" data-zone="Central District"><span>01</span><b>Central</b></div>
+              <div class="zone z2" data-zone="Riverside"><span>02</span><b>Riverside</b></div>
+              <div class="zone z3 high-zone" data-zone="Industrial Area"><span>03</span><b>Industrial</b></div>
+              <div class="zone z4 elevated-zone" data-zone="University District"><span>04</span><b>University</b></div>
+              <div class="zone z5 watch-zone" data-zone="Residential East"><span>05</span><b>Residential</b></div>
+              <div class="map-pin p1">WATER</div><div class="map-pin p2">HEAT</div><div class="map-pin p3">FLOOD</div>
+              <div class="map-grid"></div>
+              <div class="map-center-label">CITYPULSE<br><small>URBAN SIGNAL FIELD</small></div>
+            </div>
+            <aside class="zone-panel" id="zonePanel">
+              <span class="eyebrow">SELECTED ZONE</span>
+              <h3>University District</h3>
+              <div class="zone-score"><strong>69</strong><span>/100<br>RESILIENCE</span></div>
+              <div class="mini-stat"><span>PRIMARY RISK</span><b>HEAT</b></div>
+              <div class="mini-stat"><span>SECONDARY</span><b>MOBILITY</b></div>
+              <div class="mini-stat"><span>TREND</span><b class="up">↑ RISING</b></div>
+              <button class="text-btn" id="zoneExplore">Explore zone →</button>
+            </aside>
+          </div>
+        </section>
+  </main>
+
+  <footer>
+    <span>© 2026 CITYPULSE — COMPETITION PROTOTYPE</span>
+    <span>SIMULATED DATA · NOT AN EMERGENCY SERVICE</span>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CITYPULSE — urban early-warning and resilience prototype.">
+  <title>CITYPULSE — City Overview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="noise"></div>
+
+  <header class="topbar">
+    <a class="brand" href="index.html" aria-label="CITYPULSE home">
+    <img src="citypulse-logo.png" alt="CITYPULSE">
+</a>
+    <!-- <a class="brand" href="#overview" aria-label="CITYPULSE home">
+      <span class="brand-mark" aria-hidden="true">
+        <span class="city-bars"><i></i><i></i><i></i><i></i></span>
+        <span class="pulse"></span>
+      </span>
+      <span>CITY<span>PULSE</span></span>
+    </a> -->
+
+    <nav class="nav" aria-label="Primary navigation">
+      <a href="overview.html">Overview</a>
+      <a href="risks.html">Risks</a>
+      <a href="map.html">Map</a>
+      <a href="my-area.html">My Area</a>
+      <a href="command.html">Command</a><a href="scenarios.html">Simulate</a>
+      <a href="future.html">Future</a>
+    </nav>
+
+    <div class="top-status"><span class="status-dot"></span> SIGNALS NOMINAL</div><div class="demo-pill"><b></b> DEMO MODE</div>
+    <button class="menu-btn" id="menuBtn" aria-label="Open navigation">☰</button>
+  </header>
+
+  <main>
+    <section class="section overview-section" id="overview">
+          <div class="section-heading split">
+            <div>
+              <span class="section-num">02</span><span class="eyebrow">CITY OVERVIEW</span>
+              <h2>One score.<br><em>Eight signals.</em></h2>
+            </div>
+            <div class="index-score">
+              <div class="score-ring"><span>72</span><small>/100</small></div>
+              <div><b>WATCH</b><small>City Resilience Index</small></div>
+            </div>
+          </div>
+
+          <div class="signal-grid" id="signalGrid"></div>
+        </section>
+  </main>
+
+  <footer>
+    <span>© 2026 CITYPULSE — COMPETITION PROTOTYPE</span>
+    <span>SIMULATED DATA · NOT AN EMERGENCY SERVICE</span>
+  </footer>
+
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-card">
+      <button class="modal-close" id="modalClose" aria-label="Close">×</button>
+      <span class="eyebrow">SIGNAL DETAIL</span>
+      <h2 id="modalTitle">Water Stress</h2>
+      <p id="modalText"></p>
+      <div class="modal-bars">
+        <div><span>Current signal</span><b id="modalCurrent">82</b></div>
+        <div><span>Trend</span><b id="modalTrend">↑ Rising</b></div>
+      </div>
+      <div class="fake-chart" id="fakeChart"></div>
+      <small class="demo-note">SIMULATED DEMO DATA — not a live measurement or emergency prediction.</small>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
