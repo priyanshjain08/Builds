@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PJ — Digital Journal, Issue 08</title>
+<meta name="description" content="PJ — a digital journal of software projects, field notes and experiments from a student developer.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,340..600;1,9..144,400..500&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+/* ============ 1. RESET ============ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font:inherit;background:none;border:none;cursor:pointer;color:inherit}
+ul{list-style:none}
+
+/* ============ 2. VARIABLES ============ */
+:root{
+  --paper:#f2ede2;
+  --paper-2:#eae3d3;
+  --ink:#211c17;
+  --muted:#6f6659;
+  --accent:#8a2317;
+  --rule:#cdc1a8;
+  --serif:'Fraunces',Georgia,serif;
+  --sans:'Inter',Arial,sans-serif;
+  --mono:'Space Mono',monospace;
+  --pad:clamp(20px,4vw,64px);
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* ============ 3. TYPOGRAPHY ============ */
+body{font-family:var(--sans);color:var(--ink);background:var(--paper);font-size:16px;line-height:1.5}
+h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.02;letter-spacing:-0.01em}
+.label{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.rule{border:none;border-top:1px solid var(--rule)}
+.vrule{border-left:1px solid var(--rule)}
+p.lede{font-family:var(--serif);font-size:clamp(18px,2vw,22px);line-height:1.5;max-width:60ch}
+.serif-body{font-family:var(--serif);font-size:17px;line-height:1.65;max-width:62ch;color:#3a332b}
+
+/* ============ 4. GLOBAL ============ */
+.wrap{max-width:1320px;margin:0 auto;padding-left:var(--pad);padding-right:var(--pad)}
+section{padding:88px 0}
+.num{font-family:var(--mono);font-size:12px;color:var(--accent)}
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+::selection{background:var(--accent);color:var(--paper)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.skip-link{position:absolute;left:-999px;top:0;background:var(--ink);color:var(--paper);padding:10px 16px;z-index:200}
+.skip-link:focus{left:var(--pad);top:env(safe-area-inset-top,10px)}
+
+/* page-load transition */
+#intro{position:fixed;inset:0;background:var(--ink);z-index:500;display:flex;align-items:center;justify-content:center;transition:opacity .5s ease .35s}
+#intro .line{width:1px;height:0;background:var(--paper);animation:growline .4s ease forwards}
+#intro span{position:absolute;font-family:var(--mono);color:var(--paper);font-size:13px;letter-spacing:.2em;opacity:0;animation:showtag .3s ease .35s forwards}
+@keyframes growline{to{height:64px}}
+@keyframes showtag{to{opacity:1}}
+#intro.done{opacity:0;pointer-events:none}
+@media (prefers-reduced-motion:reduce){#intro{display:none}}
+
+/* ============ 5. MASTHEAD ============ */
+header.masthead{position:sticky;top:0;z-index:100;background:var(--paper);padding-top:calc(14px + env(safe-area-inset-top,0px))}
+.masthead-top{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:0 var(--pad) 12px}
+.brand{font-family:var(--serif);font-weight:600;font-size:20px}
+.brand small{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.15em;color:var(--muted);font-weight:400}
+.issue-tag{text-align:center;font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--muted)}
+.masthead-links{display:flex;gap:20px;justify-content:flex-end;font-family:var(--mono);font-size:11px;letter-spacing:.08em}
+.masthead-links a:hover{color:var(--accent)}
+
+/* ============ 6. NAVIGATION ============ */
+nav.pub-nav{border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+nav.pub-nav .wrap{display:flex;justify-content:space-between;align-items:center;padding:0 var(--pad)}
+.nav-links{display:flex;gap:32px;padding:12px 0}
+.nav-links a{font-size:13px;font-weight:500;position:relative;padding-bottom:2px}
+.nav-links a::after{content:'';position:absolute;left:0;right:100%;bottom:0;height:1px;background:var(--accent);transition:right .25s ease}
+.nav-links a:hover::after,.nav-links a:focus-visible::after{right:0}
+.nav-toggle{display:none;font-family:var(--mono);font-size:12px;letter-spacing:.08em;padding:14px 0}
+.nav-mobile{display:none}
+@media (max-width:760px){
+  .nav-links{display:none}
+  .nav-toggle{display:block}
+  nav.pub-nav .wrap{padding:0 var(--pad)}
+  .nav-mobile{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--rule)}
+  .nav-mobile a{padding:14px 0;border-bottom:1px solid var(--rule);font-family:var(--serif);font-size:20px}
+  .nav-mobile.open{display:flex}
+  .nav-mobile:not(.open){display:none}
+}
+
+/* ============ 7. COVER ============ */
+.cover{padding:64px 0 0}
+.cover-meta{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.06em;padding-bottom:28px}
+.cover-kicker{display:flex;gap:10px;align-items:baseline;margin-bottom:10px}
+.cover h1{font-size:clamp(52px,10vw,132px);text-transform:uppercase}
+.cover h1 em{font-style:italic;color:var(--accent);font-weight:500}
+.cover-grid{display:grid;grid-template-columns:1.3fr .7fr;gap:48px;margin-top:36px;align-items:end}
+.cover-visual{aspect-ratio:4/5;background:
+  repeating-linear-gradient(115deg,var(--ink) 0 2px,transparent 2px 26px),
+  linear-gradient(160deg,var(--accent),#3d0f0a);
+  position:relative;overflow:hidden}
+.cover-visual::after{content:'FIG.01';position:absolute;bottom:16px;left:16px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--paper);opacity:.8}
+.cover-side{display:flex;flex-direction:column;gap:26px;padding-bottom:8px}
+.cover-facts{display:grid;grid-template-columns:1fr 1fr;gap:20px 16px;border-top:1px solid var(--rule);padding-top:20px}
+.cover-facts div span{display:block}
+.cover-facts .label{margin-bottom:4px}
+.cover-facts strong{font-family:var(--serif);font-size:17px;font-weight:500}
+@media (max-width:900px){.cover-grid{grid-template-columns:1fr}}
+
+/* ============ 8. FEATURED STORY ============ */
+.feature{border-top:1px solid var(--rule)}
+.feature-head{display:flex;justify-content:space-between;align-items:baseline;padding-bottom:36px}
+.feature h2{font-size:clamp(34px,5vw,58px);text-transform:uppercase;max-width:14ch}
+.feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+.feature-sub{margin-top:30px}
+.feature-sub h3{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.feature-mock{background:var(--ink);border-radius:6px;overflow:hidden;box-shadow:0 24px 48px -20px rgba(33,28,23,.35)}
+.feature-mock .bar{display:flex;gap:6px;padding:12px 14px;border-bottom:1px solid #3a332b}
+.feature-mock .bar span{width:9px;height:9px;border-radius:50%;background:#4d443a}
+.feature-mock .body{padding:26px;display:grid;gap:12px}
+.feature-mock .row{height:10px;background:#3a332b;border-radius:2px}
+.feature-mock .row.w1{width:70%}.feature-mock .row.w2{width:45%}.feature-mock .row.w3{width:88%}
+.feature-mock .card{margin-top:10px;border:1px solid #3a332b;border-radius:4px;padding:16px;display:grid;gap:8px}
+.feature-caption{margin-top:14px;font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.04em}
+@media (max-width:900px){.feature-grid{grid-template-columns:1fr}}
+
+/* ============ 9. SELECTED WORK ============ */
+.work-head{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--rule);padding-top:20px;margin-bottom:8px}
+.work-head h2{font-size:clamp(30px,4vw,44px)}
+.project{border-top:1px solid var(--rule);padding:48px 0;cursor:default}
+.project-top{display:flex;gap:18px;align-items:baseline;margin-bottom:14px}
+.project h3{font-size:clamp(26px,4vw,40px);text-transform:uppercase}
+.project-meta{display:flex;gap:16px;font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.05em;margin-bottom:16px}
+.project p{max-width:56ch}
+.p-split{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center}
+.p-split.reverse .p-visual{order:2}
+.p-visual{aspect-ratio:16/10;background:linear-gradient(135deg,var(--paper-2),var(--rule));position:relative;border:1px solid var(--rule)}
+.p-visual::before{content:'';position:absolute;inset:14px;border:1px solid var(--ink);opacity:.15}
+.p-full h3{font-size:clamp(38px,7vw,80px);max-width:none}
+.p-centered{text-align:center}
+.p-centered h3{font-size:clamp(30px,5vw,56px)}
+.p-centered p{margin:0 auto}
+.p-centered .project-meta{justify-content:center}
+.p-small{max-width:60ch}
+@media (max-width:820px){.p-split,.p-split.reverse{grid-template-columns:1fr}.p-split.reverse .p-visual{order:0}}
+
+/* ============ 10. FIELD NOTES ============ */
+.notes{border-top:1px solid var(--rule);background:var(--paper-2)}
+.notes-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);margin-top:32px}
+.note{background:var(--paper-2);padding:32px}
+.note .num{display:block;margin-bottom:14px}
+.note h3{font-size:20px;margin-bottom:10px}
+.note p{font-family:var(--serif);color:#3a332b;line-height:1.6}
+@media (max-width:700px){.notes-grid{grid-template-columns:1fr}}
+
+/* ============ 11. PROFILE ============ */
+.profile{border-top:1px solid var(--rule)}
+.profile-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;margin-top:32px}
+.profile-mark{font-family:var(--serif);font-size:clamp(90px,14vw,220px);font-weight:600;line-height:.82;letter-spacing:-.02em}
+.profile-mark span{display:block;color:var(--accent);font-style:italic;font-weight:500}
+.profile-meta{margin-top:40px;display:grid;gap:18px}
+.profile-meta div{border-top:1px solid var(--rule);padding-top:12px}
+.profile-meta strong{display:block;font-family:var(--serif);font-size:18px;font-weight:500;margin-top:3px}
+@media (max-width:820px){.profile-grid{grid-template-columns:1fr}}
+
+/* ============ 12. CHRONICLE ============ */
+.chronicle{border-top:1px solid var(--rule)}
+.chron-list{margin-top:28px}
+.chron-item{display:grid;grid-template-columns:110px 1fr;gap:24px;padding:20px 0;border-top:1px solid var(--rule)}
+.chron-item:last-child{border-bottom:1px solid var(--rule)}
+.chron-item .year{font-family:var(--mono);font-size:14px;color:var(--accent)}
+.chron-item p{font-family:var(--serif);font-size:19px}
+
+/* ============ 13. TECH INDEX ============ */
+.tech{border-top:1px solid var(--rule)}
+.tech-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0 40px;margin-top:28px}
+.tech-item{display:flex;gap:14px;padding:11px 0;border-top:1px solid var(--rule);align-items:baseline}
+.tech-item:nth-child(9),.tech-item:nth-child(10){border-bottom:1px solid var(--rule)}
+.tech-item .n{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.tech-item .t{font-family:var(--serif);font-size:19px}
+@media (max-width:600px){.tech-grid{grid-template-columns:1fr}}
+
+/* ============ 14. ARCHIVE ============ */
+.archive{border-top:1px solid var(--rule)}
+.archive-list{margin-top:28px;border-top:1px solid var(--rule)}
+.archive-row{display:flex;align-items:center;gap:22px;padding:16px 0;border-bottom:1px solid var(--rule)}
+.archive-row .n{font-family:var(--mono);font-size:12px;color:var(--muted);width:24px}
+.archive-row .t{font-family:var(--serif);font-size:22px;flex:1}
+
+/* pull quote */
+.pull{border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:96px 0;text-align:center}
+.pull h2{font-size:clamp(36px,7vw,84px);text-transform:uppercase;line-height:1.05}
+
+/* ============ 15. CONTACT ============ */
+.contact{border-top:1px solid var(--rule)}
+.contact h2{font-size:clamp(40px,8vw,110px);text-transform:uppercase}
+.contact-links{margin-top:44px;border-top:1px solid var(--rule)}
+.contact-row{display:flex;justify-content:space-between;align-items:center;padding:22px 0;border-bottom:1px solid var(--rule);font-family:var(--serif);font-size:clamp(22px,4vw,34px)}
+.contact-row span{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.contact-row:hover{color:var(--accent)}
+
+/* ============ 16. FOOTER ============ */
+footer{border-top:1px solid var(--rule);padding:40px 0}
+.footer-grid{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.05em}
+.footer-links{display:flex;gap:18px}
+.footer-links a:hover{color:var(--accent)}
+.end{text-align:center;font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:.2em;margin-top:26px}
+
+#back-top{position:fixed;right:22px;bottom:22px;background:var(--ink);color:var(--paper);width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:14px;opacity:0;pointer-events:none;transition:opacity .3s ease;z-index:60}
+#back-top.show{opacity:1;pointer-events:auto}
+
+/* custom cursor */
+.cur{position:fixed;top:0;left:0;pointer-events:none;z-index:300;font-family:var(--mono);font-size:11px;letter-spacing:.1em;background:var(--ink);color:var(--paper);padding:6px 11px;border-radius:20px;transform:translate(-50%,-50%) scale(0);transition:transform .15s ease;white-space:nowrap}
+.cur.show{transform:translate(-50%,-50%) scale(1)}
+@media (hover:none){.cur{display:none}}
+
+/* ============ 18. RESPONSIVE ============ */
+@media (max-width:640px){
+  section{padding:56px 0}
+  .masthead-top{grid-template-columns:1fr 1fr;row-gap:6px}
+  .issue-tag{grid-column:1/3;text-align:left;order:3}
+  .masthead-links{display:none}
+  .cover-facts{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="intro" aria-hidden="true"><div class="line"></div><span>ISSUE 08</span></div>
+<div class="cur" id="cursor" aria-hidden="true"></div>
+
+<header class="masthead">
+  <div class="masthead-top wrap">
+    <div class="brand">PJ<small>Digital Journal</small></div>
+    <div class="issue-tag">Issue 08 — 2026</div>
+    <div class="masthead-links"><a href="#tech">Index</a><a href="#contact">Contact</a></div>
+  </div>
+  <nav class="pub-nav">
+    <div class="wrap">
+      <div class="nav-links">
+        <a href="#feature">Features</a>
+        <a href="#work">Work</a>
+        <a href="#notes">Notes</a>
+        <a href="#profile">About</a>
+        <a href="#archive">Archive</a>
+      </div>
+      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navMobile">Menu</button>
+    </div>
+    <div class="nav-mobile wrap" id="navMobile">
+      <a href="#feature">Features</a>
+      <a href="#work">Work</a>
+      <a href="#notes">Notes</a>
+      <a href="#profile">About</a>
+      <a href="#archive">Archive</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+
+<!-- COVER -->
+<section class="cover">
+  <div class="wrap">
+    <div class="cover-meta">
+      <span>Featured: Dev Desk</span>
+      <span>Category: Digital Product</span>
+      <span>Format: Software</span>
+      <span>Status: Personal Project</span>
+    </div>
+    <div class="cover-kicker label">Vol. 01 — Issue 08</div>
+    <h1>Making<br>software<br><em>with intention.</em></h1>
+    <div class="cover-grid">
+      <div>
+        <p class="lede reveal">A collection of digital experiments, software projects, and ideas built while exploring the intersection of design and development.</p>
+        <div class="cover-facts">
+          <div><span class="label">Vol.</span><strong>01</strong></div>
+          <div><span class="label">Year</span><strong>2026</strong></div>
+          <div><span class="label">Origin</span><strong>India</strong></div>
+          <div><span class="label">Author</span><strong>PJ</strong></div>
+        </div>
+      </div>
+      <div class="cover-visual reveal" role="img" aria-label="Abstract editorial composition"></div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURE -->
+<section class="feature" id="feature">
+  <div class="wrap">
+    <div class="feature-head">
+      <div>
+        <div class="label" style="margin-bottom:10px">Feature / 01</div>
+        <h2 class="reveal">Building a space for builders.</h2>
+      </div>
+      <div class="label">Dev Desk</div>
+    </div>
+    <div class="feature-grid">
+      <div>
+        <p class="serif-body reveal">DevDesk started as a way to bring the scattered tools of a coding session — notes, snippets, project links, and a running task list — into one workspace instead of a dozen browser tabs. It's built as a personal utility first: something to actually use while working, not a showcase piece.</p>
+        <div class="feature-sub reveal">
+          <h3>The Idea</h3>
+          <p class="serif-body">Most days of building software involve jumping between a notes app, a terminal, and half-remembered snippets. DevDesk asks a simple question: what if those lived in one panel, organized by project instead of by app.</p>
+        </div>
+        <div class="feature-sub reveal">
+          <h3>The Build</h3>
+          <p class="serif-body">Built with HTML, CSS and vanilla JavaScript first, with a Node backend added later to persist projects and notes. The interface went through several layout passes before settling on a three-pane structure: projects, notes, and an active task list.</p>
+        </div>
+        <div class="feature-sub reveal">
+          <h3>The Experience</h3>
+          <p class="serif-body">The result is a small, fast tool that opens instantly and holds only what's relevant to the project at hand — no dashboards, no onboarding flow, just a workspace that gets out of the way.</p>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="feature-mock" aria-hidden="true">
+          <div class="bar"><span></span><span></span><span></span></div>
+          <div class="body">
+            <div class="row w1"></div>
+            <div class="row w2"></div>
+            <div class="card">
+              <div class="row w3"></div>
+              <div class="row w2"></div>
+            </div>
+            <div class="card">
+              <div class="row w1"></div>
+              <div class="row w3"></div>
+            </div>
+          </div>
+        </div>
+        <div class="feature-caption">Fig. 01 — DevDesk interface<br>Personal project / 2026</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SELECTED WORK -->
+<section id="work">
+  <div class="wrap">
+    <div class="work-head"><h2>Selected Work</h2><div class="label">01 — 07</div></div>
+
+    <article class="project reveal">
+      <div class="p-split">
+        <div>
+          <div class="project-top"><span class="num">01</span><h3>DevDesk</h3></div>
+          <div class="project-meta"><span>Productivity / Software</span><span>2026</span></div>
+          <p class="serif-body">A personal workspace that gathers project notes, snippets and tasks into a single panel, built to replace a scattered set of browser tabs during a coding session.</p>
+        </div>
+        <div class="p-visual" role="img" aria-label="DevDesk interface composition"></div>
+      </div>
+    </article>
+
+    <article class="project reveal">
+      <div class="p-split reverse">
+        <div>
+          <div class="project-top"><span class="num">02</span><h3>SyncSpace</h3></div>
+          <div class="project-meta"><span>Collaboration / Web App</span><span>2026</span></div>
+          <p class="serif-body">A shared workspace concept for small teams to keep notes and files in sync in real time, built to learn the fundamentals of websockets and live-state handling.</p>
+        </div>
+        <div class="p-visual" role="img" aria-label="SyncSpace interface composition"></div>
+      </div>
+    </article>
+
+    <article class="project reveal p-full">
+      <div class="project-top"><span class="num">03</span><h3>Smart File Organizer</h3></div>
+      <div class="project-meta"><span>Utility / Software</span><span>2026</span></div>
+      <p class="serif-body">A desktop utility designed to organize files through automated categorization and structured workflows, sorting downloads and project folders by type, date and simple rules.</p>
+    </article>
+
+    <article class="project reveal">
+      <div class="p-split">
+        <div>
+          <div class="project-top"><span class="num">04</span><h3>System Resource Monitor</h3></div>
+          <div class="project-meta"><span>Systems / Utility</span><span>2026</span></div>
+          <p class="serif-body">A lightweight monitor for CPU, memory and disk activity, built to get closer to the operating system and understand how resource data can be read and displayed in real time.</p>
+        </div>
+        <div class="p-visual" role="img" aria-label="System monitor composition"></div>
+      </div>
+    </article>
+
+    <article class="project reveal p-centered">
+      <div class="project-top" style="justify-content:center"><span class="num">05</span><h3>AlgoViz</h3></div>
+      <div class="project-meta"><span>Education / Visualization</span><span>2026</span></div>
+      <p class="serif-body">An interactive visualizer for sorting and pathfinding algorithms, built to make abstract algorithm behavior visible step by step while studying data structures.</p>
+    </article>
+
+    <article class="project reveal p-small">
+      <div class="project-top"><span class="num">06</span><h3>BizFlow</h3></div>
+      <div class="project-meta"><span>Business Tools / Web App</span><span>2026</span></div>
+      <p class="serif-body">A simple invoicing and client-tracking tool built for a small-business use case, focused on a clean record of clients, invoices and payment status.</p>
+    </article>
+
+    <article class="project reveal p-full">
+      <div class="project-top"><span class="num">07</span><h3>FlowBoard</h3></div>
+      <div class="project-meta"><span>Productivity / Kanban</span><span>2026</span></div>
+      <p class="serif-body">A drag-and-drop kanban board for organizing personal projects and study tasks into columns, built while learning drag events, local state and layout persistence.</p>
+    </article>
+  </div>
+</section>
+
+<!-- FIELD NOTES -->
+<section class="notes" id="notes">
+  <div class="wrap">
+    <h2 class="reveal" style="font-size:clamp(30px,4vw,44px)">Field Notes</h2>
+    <div class="notes-grid">
+      <div class="note reveal"><span class="num">01</span><h3>Why I Build</h3><p>Building software is still the fastest way I've found to actually learn it — reading only gets a concept halfway there; shipping something small forces the rest.</p></div>
+      <div class="note reveal"><span class="num">02</span><h3>Design Before Code</h3><p>Sketching the interface before touching a line of code saves rework later. A rough layout on paper answers more questions than an early prototype does.</p></div>
+      <div class="note reveal"><span class="num">03</span><h3>Learning in Public</h3><p>Sharing half-finished projects instead of waiting for a polished version has been a better way to stay honest about what's actually working.</p></div>
+      <div class="note reveal"><span class="num">04</span><h3>From Idea to Software</h3><p>Most ideas fall apart at the first real constraint. Writing the smallest working version early exposes that constraint before too much time is spent.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROFILE -->
+<section class="profile" id="profile">
+  <div class="wrap">
+    <div class="label" style="margin-bottom:8px">Profile / 08</div>
+    <div class="profile-grid">
+      <div>
+        <div class="profile-mark reveal">PJ<span>Student<br>Developer</span></div>
+      </div>
+      <div class="reveal">
+        <p class="serif-body">PJ is a student developer building software projects across the web stack — from small utilities to full-stack applications — while learning through direct, hands-on building rather than following a single fixed curriculum. Web development is the primary focus, alongside broader exploration of programming languages and interface design.</p>
+        <div class="profile-meta">
+          <div><span class="label">Focus</span><strong>Web Development</strong></div>
+          <div><span class="label">Exploring</span><strong>Full-Stack Development</strong></div>
+          <div><span class="label">Tools</span><strong>HTML · CSS · JavaScript · React · Node · Java · Python · C</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHRONICLE -->
+<section class="chronicle">
+  <div class="wrap">
+    <h2 class="reveal" style="font-size:clamp(30px,4vw,44px)">Chronicle</h2>
+    <div class="chron-list">
+      <div class="chron-item reveal"><span class="year">2025</span><p>Beginning frontend experiments with HTML, CSS and JavaScript.</p></div>
+      <div class="chron-item reveal"><span class="year">2026</span><p>Building larger web applications with structured layouts and interactivity.</p></div>
+      <div class="chron-item reveal"><span class="year">2026</span><p>Exploring Java, Python and C to broaden programming fundamentals.</p></div>
+      <div class="chron-item reveal"><span class="year">2026</span><p>Developing full-stack projects connecting frontend interfaces to backend logic.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- TECH INDEX -->
+<section class="tech" id="tech">
+  <div class="wrap">
+    <h2 class="reveal" style="font-size:clamp(30px,4vw,44px)">Technology Index</h2>
+    <div class="tech-grid">
+      <div class="tech-item"><span class="n">01</span><span class="t">HTML</span></div>
+      <div class="tech-item"><span class="n">02</span><span class="t">CSS</span></div>
+      <div class="tech-item"><span class="n">03</span><span class="t">JavaScript</span></div>
+      <div class="tech-item"><span class="n">04</span><span class="t">React</span></div>
+      <div class="tech-item"><span class="n">05</span><span class="t">Node.js</span></div>
+      <div class="tech-item"><span class="n">06</span><span class="t">Java</span></div>
+      <div class="tech-item"><span class="n">07</span><span class="t">Python</span></div>
+      <div class="tech-item"><span class="n">08</span><span class="t">C</span></div>
+      <div class="tech-item"><span class="n">09</span><span class="t">Git</span></div>
+      <div class="tech-item"><span class="n">10</span><span class="t">GitHub</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ARCHIVE -->
+<section class="archive" id="archive">
+  <div class="wrap">
+    <h2 class="reveal" style="font-size:clamp(30px,4vw,44px)">Archive</h2>
+    <p class="label" style="margin-top:8px">Design directions explored for this portfolio</p>
+    <div class="archive-list">
+      <div class="archive-row"><span class="n">01</span><span class="t">Professional</span></div>
+      <div class="archive-row"><span class="n">02</span><span class="t">Dark Editorial</span></div>
+      <div class="archive-row"><span class="n">03</span><span class="t">Swiss Minimal</span></div>
+      <div class="archive-row"><span class="n">04</span><span class="t">Cyber</span></div>
+      <div class="archive-row"><span class="n">05</span><span class="t">Creative Studio</span></div>
+      <div class="archive-row"><span class="n">06</span><span class="t">Bento</span></div>
+      <div class="archive-row"><span class="n">07</span><span class="t">Dev OS</span></div>
+      <div class="archive-row"><span class="n">08</span><span class="t">Editorial</span></div>
+      <div class="archive-row"><span class="n">09</span><span class="t">Interactive Story</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PULL QUOTE -->
+<section class="pull">
+  <div class="wrap"><h2 class="reveal">"The best way<br>to learn<br>is to build."</h2></div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="label" style="margin-bottom:10px">Last Page</div>
+    <h2>Let's talk.</h2>
+    <p class="lede reveal" style="margin-top:20px">Have an idea, project, or simply want to connect? Reach out below.</p>
+    <div class="contact-links">
+      <a class="contact-row" href="mailto:priyanshjain08.offical@gmail.com"><span>Email</span>priyanshjain08.offical@gmail.com</a>
+      <a class="contact-row" href="https://github.com/priyanshjain08" target="_blank" rel="noopener"><span>GitHub</span>github.com/priyanshjain08</a>
+      <a class="contact-row" href="https://linkedin.com/priyanshjain08" target="_blank" rel="noopener"><span>LinkedIn</span>linkedin.com/in/priyanshjain08</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <span>PJ Digital Journal</span>
+      <span>Issue 08 / 2026</span>
+      <span>India</span>
+      <span>© 2026 PJ</span>
+      <span class="footer-links"><a href="#archive">Archive</a><a href="#contact">Contact</a><a href="https://github.com/" target="_blank" rel="noopener">GitHub</a></span>
+    </div>
+    <div class="end">— End of Issue —</div>
+  </div>
+</footer>
+
+<button id="back-top" aria-label="Back to top">↑</button>
+
+<script>
+(function(){
+  // intro transition
+  var intro=document.getElementById('intro');
+  setTimeout(function(){intro.classList.add('done')},900);
+
+  // mobile nav
+  var toggle=document.getElementById('navToggle');
+  var mobile=document.getElementById('navMobile');
+  toggle.addEventListener('click',function(){
+    var open=mobile.classList.toggle('open');
+    toggle.setAttribute('aria-expanded',open);
+    toggle.textContent=open?'Close':'Menu';
+  });
+  mobile.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click',function(){mobile.classList.remove('open');toggle.setAttribute('aria-expanded',false);toggle.textContent='Menu';});
+  });
+
+  // scroll reveals
+  var revealEls=document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    },{threshold:.15});
+    revealEls.forEach(function(el){io.observe(el)});
+  } else {
+    revealEls.forEach(function(el){el.classList.add('in')});
+  }
+
+  // back to top
+  var backTop=document.getElementById('back-top');
+  window.addEventListener('scroll',function(){
+    backTop.classList.toggle('show', window.scrollY>800);
+  });
+  backTop.addEventListener('click',function(){
+    window.scrollTo({top:0,behavior: matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+  });
+
+  // custom cursor (desktop / hover-capable only)
+  if(matchMedia('(hover:hover)').matches){
+    var cur=document.getElementById('cursor');
+    document.addEventListener('mousemove',function(e){
+      cur.style.left=e.clientX+'px'; cur.style.top=e.clientY+'px';
+    });
+    document.querySelectorAll('.project').forEach(function(el){
+      el.addEventListener('mouseenter',function(){cur.textContent='View';cur.classList.add('show')});
+      el.addEventListener('mouseleave',function(){cur.classList.remove('show')});
+    });
+    document.querySelectorAll('.note').forEach(function(el){
+      el.addEventListener('mouseenter',function(){cur.textContent='Read';cur.classList.add('show')});
+      el.addEventListener('mouseleave',function(){cur.classList.remove('show')});
+    });
+  }
+})();
+</script>
+
+<!--
+PROJECT: PJ Editorial Portfolio
+DESCRIPTION: An editorial magazine-inspired portfolio presenting software projects, development experiments, field notes, and personal information through a print-inspired digital publication.
+TECHNOLOGIES: HTML5, CSS3, Vanilla JavaScript
+FILE: index.html
+RUNNING: Open index.html directly in a browser.
+-->
+</body>
+</html>
